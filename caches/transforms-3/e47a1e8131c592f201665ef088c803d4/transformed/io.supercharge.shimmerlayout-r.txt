@@ -1,0 +1,11 @@
+io.supercharge.shimmerlayout
+attr shimmer_angle
+attr shimmer_animation_duration
+attr shimmer_auto_start
+attr shimmer_color
+attr shimmer_gradient_center_color_width
+attr shimmer_mask_width
+attr shimmer_reverse_animation
+color shimmer_color
+string app_name
+styleable ShimmerLayout shimmer_angle shimmer_animation_duration shimmer_auto_start shimmer_color shimmer_gradient_center_color_width shimmer_mask_width shimmer_reverse_animation

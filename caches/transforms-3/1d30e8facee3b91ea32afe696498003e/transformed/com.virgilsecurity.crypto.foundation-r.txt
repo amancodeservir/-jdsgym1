@@ -1,0 +1,2 @@
+com.virgilsecurity.crypto.foundation
+string app_name

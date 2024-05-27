@@ -1,52 +1,80 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:rkfitness/core/config/app_routes.dart';
+import 'package:rkfitness/data/user_data.dart';
+import 'package:rkfitness/presentation/controllers/snackbar_controller.dart';
 
 class AuthController extends GetxController {
+  ToastController toastController = ToastController();
   static AuthController instance = Get.find();
   late Rx<User?> firebaseUser;
   FirebaseAuth auth = FirebaseAuth.instance;
-
   late Rx<GoogleSignInAccount?> googleSignInAccount;
   GoogleSignIn googleSign = GoogleSignIn();
+  var isLoading = false.obs;
+  var loggedIn = false.obs;
+  var loggedOut = false.obs;
+  RxInt realTimeNumber = 0.obs;
+  var userData = Rxn<UserData>();
 
   @override
-  void onReady() {
-    super.onReady();
-
+  void onInit() {
+    super.onInit();
     firebaseUser = Rx<User?>(auth.currentUser);
     googleSignInAccount = Rx<GoogleSignInAccount?>(googleSign.currentUser);
-
     firebaseUser.bindStream(auth.userChanges());
     ever(firebaseUser, _setInitialScreen);
-
     googleSignInAccount.bindStream(googleSign.onCurrentUserChanged);
     ever(googleSignInAccount, _setInitialScreenGoogle);
   }
 
-  _setInitialScreen(User? user) {
-    if (user == null) {
-      // Get.offAll(() => const Register());
+  _setInitialScreen(User? user) async {
+    if (user != null) {
+      try {
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+        if (userDoc.exists) {
+          userData.value =
+              UserData.fromJson(userDoc.data() as Map<String, dynamic>);
+          navigateToScreen(userData);
+        } else {
+          print('User data not found');
+        }
+      } catch (e) {
+        print('Error fetching user data: $e');
+        Get.snackbar('Error', 'Failed to fetch user data');
+      } finally {
+        isLoading(false);
+      }
+    } else if (user == null &&
+        (loggedIn.value == false || loggedOut.value == true)) {
+      Future.delayed(const Duration(seconds: 2), () {
+        Get.offNamed(AppRoutes.LOGIN);
+      });
     } else {
-      // Get.offAll(() => Home());
+      Future.delayed(const Duration(seconds: 2), () {
+        // Get.offNamed(AppRoutes.HOME);
+      });
     }
   }
 
   _setInitialScreenGoogle(GoogleSignInAccount? googleSignInAccount) {
-    print(googleSignInAccount);
     if (googleSignInAccount == null) {
-      // if the user is not found then the user is navigated to the Register Screen
-      // Get.offAll(() => const Register());
+      Get.offAllNamed(AppRoutes.LOGIN);
     } else {
-      // if the user exists and logged in the the user is navigated to the Home Screen
-      // Get.offAll(() => Home());
+      // Get.offAllNamed(AppRoutes.HOME);
     }
   }
 
   void signInWithGoogle() async {
     try {
       GoogleSignInAccount? googleSignInAccount = await googleSign.signIn();
-
       if (googleSignInAccount != null) {
         GoogleSignInAuthentication googleSignInAuthentication =
             await googleSignInAccount.authentication;
@@ -70,24 +98,95 @@ class AuthController extends GetxController {
     }
   }
 
-  void register(String email, password) async {
-    print(email);
-     print(password);
+  void register(String name, String email, String mobileNumber, String password,
+      String role, BuildContext context) async {
+    final progress = ProgressHUD.of(context);
     try {
-      await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-    } catch (firebaseAuthException) {
-      print(firebaseAuthException);
+      progress?.show();
+      await auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((userCredential) {
+        var db = FirebaseFirestore.instance;
+
+        db.collection('users').doc(userCredential.user!.uid).set({
+          'userId': userCredential.user!.uid,
+          'name': name,
+          'email': email,
+          'mobileNumber': mobileNumber,
+          'profilePicture': '',
+          'role': role,
+          'dob': '',
+          'address': '',
+          'status': 'Pending',
+          'dueDate': Timestamp.now(),
+        }).then((_) {
+          toastController.showSuccessSnackbar(
+              'Congratulations!', 'Account created  successfully');
+          Get.offNamed(AppRoutes.LOGIN);
+          progress?.dismiss();
+        }).catchError((error) {
+          progress?.dismiss();
+          print('Failed to add user data to Firestore: $error');
+        });
+      });
+    } on FirebaseAuthException catch (e) {
+      progress?.dismiss();
+      print(e.message);
+      toastController.showErrorSnackbar('Failed', e.message.toString());
     }
   }
 
-  void login(String email, password) async {
+  void login(String email, String password, BuildContext context) async {
+    final progress = ProgressHUD.of(context);
+    progress?.show();
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
-    } catch (firebaseAuthException) {}
+      isLoading(false);
+      _setInitialScreen(auth.currentUser);
+      progress?.dismiss();
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      toastController.showErrorSnackbar('Failed', e.message.toString());
+      progress?.dismiss();
+    }
   }
 
   void signOut() async {
-    await auth.signOut();
+    isLoading(true);
+    await auth.signOut().then((value) {
+      isLoading(false);
+      Get.offNamed(AppRoutes.LOGIN);
+    }).catchError((onError) => {isLoading(false)});
   }
+
+ void navigateToScreen(Rxn<UserData> userData) {
+  print("Dineshh Role: ${userData.value?.role}");
+  
+  if (userData.value != null) {
+    if (userData.value!.role == 'admin') {
+      Future.delayed(const Duration(seconds: 2), () {
+        print("Navigating to Admin Dashboard");
+        Get.offNamed(AppRoutes.ADMINDASHBOARD);
+      });
+    } else if (userData.value!.role == 'member') {
+      Future.delayed(const Duration(seconds: 2), () {
+        print("Navigating to Member Dashboard");
+        Get.offNamed(AppRoutes.MEMBERDASHBOARD);
+      });
+    } else if (userData.value!.role == 'staff') {
+      Future.delayed(const Duration(seconds: 2), () {
+        print("Navigating to Staff Dashboard");
+        Get.offNamed(AppRoutes.STAFFDASHBOARD);
+      });
+    } else {
+      Future.delayed(const Duration(seconds: 2), () {
+        print("Navigating to Home");
+        // Get.offNamed(AppRoutes.HOME);
+      });
+    }
+  } else {
+    print("User data is null");
+  }
+}
+
 }

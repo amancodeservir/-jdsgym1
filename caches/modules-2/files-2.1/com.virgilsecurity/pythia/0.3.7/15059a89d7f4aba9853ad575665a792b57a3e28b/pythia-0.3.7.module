@@ -1,0 +1,107 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.virgilsecurity",
+    "module": "pythia",
+    "version": "0.3.7",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "6.0.1",
+      "buildId": "m6aswqrgmbbq7ggw6izep6qveu"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.virgilsecurity.sdk",
+          "module": "sdk",
+          "version": {
+            "requires": "7.3.1"
+          }
+        },
+        {
+          "group": "com.virgilsecurity.crypto",
+          "module": "pythia",
+          "version": {
+            "requires": "0.15.2"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pythia-0.3.7.jar",
+          "url": "pythia-0.3.7.jar",
+          "size": 31566,
+          "sha512": "82fba8de393e786e6474285ba61175e5a578e0247bf0589a3f9237226374d7cb0e03aaa433d2edcfc2a8f25bd88645e24d5d9a90ee82716a94ee688699366ad",
+          "sha256": "906fe6b2166889f14193a1464013e461ae8c87b09e602d11c7438b7815f7fc38",
+          "sha1": "ce9bb57b74034186f9cdd22304a2bd19fc0830eb",
+          "md5": "4697fba88a2d4c43c313ae3a9ba29a1"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.google.code.gson",
+          "module": "gson",
+          "version": {
+            "requires": "2.8.6"
+          }
+        },
+        {
+          "group": "com.github.kittinunf.fuel",
+          "module": "fuel",
+          "version": {
+            "requires": "1.15.1"
+          }
+        },
+        {
+          "group": "com.virgilsecurity.sdk",
+          "module": "sdk",
+          "version": {
+            "requires": "7.3.1"
+          }
+        },
+        {
+          "group": "com.virgilsecurity.crypto",
+          "module": "pythia",
+          "version": {
+            "requires": "0.15.2"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "pythia-0.3.7.jar",
+          "url": "pythia-0.3.7.jar",
+          "size": 31566,
+          "sha512": "82fba8de393e786e6474285ba61175e5a578e0247bf0589a3f9237226374d7cb0e03aaa433d2edcfc2a8f25bd88645e24d5d9a90ee82716a94ee688699366ad",
+          "sha256": "906fe6b2166889f14193a1464013e461ae8c87b09e602d11c7438b7815f7fc38",
+          "sha1": "ce9bb57b74034186f9cdd22304a2bd19fc0830eb",
+          "md5": "4697fba88a2d4c43c313ae3a9ba29a1"
+        }
+      ]
+    }
+  ]
+}

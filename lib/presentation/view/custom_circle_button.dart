@@ -6,30 +6,28 @@ class CustomCircleButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const CustomCircleButton({
-    Key? key,
+    super.key,
     required this.imageProvider,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        width: 32, // Adjust the width as needed
-        height: 32, // Adjust the height as needed
+        width: 48,
+        height: 48,
         decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: AppColors.white, 
-          border: Border.all(width: 2,color: AppColors.accentColor)
-          
-        ),
+            shape: BoxShape.circle,
+            color: AppColors.lightGrey,
+            border: Border.all(width: 2, color: AppColors.lightGrey)),
         child: Center(
           child: Image(
             image: imageProvider,
-            width: 28, // Adjust the width of the image as needed
-            height: 28, // Adjust the height of the image as needed
-            fit: BoxFit.cover, // Ensure the image covers the entire button
+            width: 28,
+            height: 28,
+            fit: BoxFit.cover,
           ),
         ),
       ),

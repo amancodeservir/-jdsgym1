@@ -1,0 +1,6 @@
+com.shockwave.pdfium.BuildConfig
+com.shockwave.pdfium.PdfDocument
+com.shockwave.pdfium.PdfDocument$Bookmark
+com.shockwave.pdfium.PdfDocument$Meta
+com.shockwave.pdfium.PdfPasswordException
+com.shockwave.pdfium.PdfiumCore

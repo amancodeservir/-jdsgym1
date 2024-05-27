@@ -1,0 +1,3 @@
+cafe.adriel.androidaudiorecorder
+string app_name
+string shipped_ffmpeg_version

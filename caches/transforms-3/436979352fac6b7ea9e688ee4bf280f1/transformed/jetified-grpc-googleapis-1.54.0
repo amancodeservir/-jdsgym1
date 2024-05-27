@@ -1,0 +1,10 @@
+io.grpc.googleapis.GoogleCloudToProdExperimentalNameResolverProvider
+io.grpc.googleapis.GoogleCloudToProdNameResolver
+io.grpc.googleapis.GoogleCloudToProdNameResolver$1Resolve
+io.grpc.googleapis.GoogleCloudToProdNameResolver$1Resolve$1
+io.grpc.googleapis.GoogleCloudToProdNameResolver$BootstrapSetter
+io.grpc.googleapis.GoogleCloudToProdNameResolver$HttpConnectionFactory
+io.grpc.googleapis.GoogleCloudToProdNameResolver$HttpConnectionProvider
+io.grpc.googleapis.GoogleCloudToProdNameResolverProvider
+io.grpc.googleapis.GoogleCloudToProdNameResolverProvider$1
+io.grpc.googleapis.GoogleCloudToProdNameResolverProvider$SharedXdsClientPoolProviderBootstrapSetter

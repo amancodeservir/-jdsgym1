@@ -1,0 +1,3 @@
+com.google.firebase.functions.ktx.BuildConfig
+com.google.firebase.functions.ktx.FirebaseFunctionsKtxRegistrar
+com.google.firebase.functions.ktx.FunctionsKt

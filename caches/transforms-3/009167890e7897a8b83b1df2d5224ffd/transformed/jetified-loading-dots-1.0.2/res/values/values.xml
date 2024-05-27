@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LoadingDots"><attr format="boolean" name="LoadingDots_auto_play"/><attr format="color" name="LoadingDots_dots_color"/><attr format="integer" name="LoadingDots_dots_count"/><attr format="dimension" name="LoadingDots_dots_size"/><attr format="dimension" name="LoadingDots_dots_space"/><attr format="integer" name="LoadingDots_loop_duration"/><attr format="integer" name="LoadingDots_loop_start_delay"/><attr format="integer" name="LoadingDots_jump_duration"/><attr format="dimension" name="LoadingDots_jump_height"/></declare-styleable>
+    <dimen name="LoadingDots_dots_size_default">12dp</dimen>
+    <dimen name="LoadingDots_dots_space_default">2dp</dimen>
+    <dimen name="LoadingDots_jump_height_default">12dp</dimen>
+</resources>

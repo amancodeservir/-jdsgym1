@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CircularStatusView</string>
+    <declare-styleable name="CircularStatusView">
+        <attr format="dimension" name="portion_width"/>
+        <attr format="color" name="portion_color"/>
+        <attr format="dimension" name="portion_spacing"/>
+        <attr format="integer" name="portions_count"/>
+    </declare-styleable>
+</resources>

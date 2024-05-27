@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <string name="app_name">RecordView</string>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <declare-styleable name="RecordButton">
+
+        <attr format="reference" name="mic_icon"/>
+        <attr format="reference" name="send_icon"/>
+        <attr format="float" name="scale_up_to"/>
+
+    </declare-styleable>
+    <declare-styleable name="RecordLockView">
+
+        <attr format="color" name="circle_color"/>
+        <attr format="color" name="circle_locked_color"/>
+        <attr format="color" name="lock_color"/>
+
+    </declare-styleable>
+    <declare-styleable name="RecordView">
+        <attr format="string" name="slide_to_cancel_text"/>
+        <attr format="reference" name="slide_to_cancel_arrow"/>
+        <attr format="dimension" name="slide_to_cancel_margin_right"/>
+        <attr format="dimension" name="slide_to_cancel_bounds"/>
+        <attr format="color" name="slide_to_cancel_arrow_color"/>
+        <attr format="string" name="cancel_text"/>
+        <attr format="color" name="cancel_text_color"/>
+        <attr format="dimension" name="cancel_text_margin_right"/>
+        <attr format="color" name="counter_time_color"/>
+
+    </declare-styleable>
+</resources>

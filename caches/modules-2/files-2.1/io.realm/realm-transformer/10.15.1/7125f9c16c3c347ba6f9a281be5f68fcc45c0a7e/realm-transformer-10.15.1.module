@@ -1,0 +1,141 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.realm",
+    "module": "realm-transformer",
+    "version": "10.15.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.5"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "realm-transformer-10.15.1.jar",
+          "url": "realm-transformer-10.15.1.jar",
+          "size": 75283,
+          "sha512": "befb74247e338897c886da9a5e0ef589ab80763c749fc42ab292a2dcd89fdc7fcd98bccef60617ae7e29c6c829f5fb5edc8d8fdb74cb426c14c3f5d0164ee09f",
+          "sha256": "f6679bf543a0654e4cb997903b294c06a390ca40a24e6f2282e7c01139cec24f",
+          "sha1": "dd9125052cb2436873f7561378b651caccc34c59",
+          "md5": "2f0a968e0e465161e3e06d29a5b6f77c"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.realm",
+          "module": "realm-annotations",
+          "version": {
+            "requires": "10.15.1"
+          }
+        },
+        {
+          "group": "org.javassist",
+          "module": "javassist",
+          "version": {
+            "requires": "3.25.0-GA"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.6.21"
+          }
+        },
+        {
+          "group": "com.google.guava",
+          "module": "guava",
+          "version": {
+            "requires": "31.0.1-jre"
+          }
+        },
+        {
+          "group": "javax.xml.bind",
+          "module": "jaxb-api",
+          "version": {
+            "requires": "2.3.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "realm-transformer-10.15.1.jar",
+          "url": "realm-transformer-10.15.1.jar",
+          "size": 75283,
+          "sha512": "befb74247e338897c886da9a5e0ef589ab80763c749fc42ab292a2dcd89fdc7fcd98bccef60617ae7e29c6c829f5fb5edc8d8fdb74cb426c14c3f5d0164ee09f",
+          "sha256": "f6679bf543a0654e4cb997903b294c06a390ca40a24e6f2282e7c01139cec24f",
+          "sha1": "dd9125052cb2436873f7561378b651caccc34c59",
+          "md5": "2f0a968e0e465161e3e06d29a5b6f77c"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "realm-transformer-10.15.1-sources.jar",
+          "url": "realm-transformer-10.15.1-sources.jar",
+          "size": 25037,
+          "sha512": "a5eb006e23c0197ce5f8cdfca58a1ff4bb4910dc1594adc7127c8c2f1b7a76aa6a9b619b352a54be3219a01db28aea36bf2a5bac23b3c54b468587b3ce367448",
+          "sha256": "c049a6444d035b983e267b08c2096ea090dc1c93705eb8ee4dc0626c8194cdd0",
+          "sha1": "f5ff7412ffd2c4ac9fa1d24a178371ba4c667952",
+          "md5": "778e911e80625037dd09ec6090cd968d"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "realm-transformer-10.15.1-javadoc.jar",
+          "url": "realm-transformer-10.15.1-javadoc.jar",
+          "size": 292558,
+          "sha512": "9b08e30b3f8c16635639fa5d9fb5a15ba8b33c0e6de315c6dcd32bab209417221fe666f71c43002823355215801d8fada38d5e12c25fdfb0f2feb69d1d8e0ef9",
+          "sha256": "26674c5878fd4b5b4d1132352bae0688ec7a0fa2bfc98177a666b90dbdb28858",
+          "sha1": "88960f582fb6ee84c37dcb20355a53bd624a51f2",
+          "md5": "b299596d3f939d8ef1d8c6d799c40c75"
+        }
+      ]
+    }
+  ]
+}

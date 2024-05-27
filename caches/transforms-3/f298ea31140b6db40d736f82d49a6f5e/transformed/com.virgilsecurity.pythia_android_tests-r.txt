@@ -1,0 +1,4 @@
+com.virgilsecurity.pythia_android_tests
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name

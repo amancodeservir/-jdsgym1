@@ -1,0 +1,2 @@
+durdinapps.rxfirebase2
+string app_name

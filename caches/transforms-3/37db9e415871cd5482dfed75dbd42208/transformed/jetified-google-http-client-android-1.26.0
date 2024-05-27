@@ -1,0 +1,11 @@
+com.google.api.client.extensions.android.AndroidUtils
+com.google.api.client.extensions.android.http.AndroidHttp
+com.google.api.client.extensions.android.http.package-info
+com.google.api.client.extensions.android.json.AndroidJsonFactory
+com.google.api.client.extensions.android.json.AndroidJsonFactory$InstanceHolder
+com.google.api.client.extensions.android.json.AndroidJsonGenerator
+com.google.api.client.extensions.android.json.AndroidJsonGenerator$StringNumber
+com.google.api.client.extensions.android.json.AndroidJsonParser
+com.google.api.client.extensions.android.json.AndroidJsonParser$1
+com.google.api.client.extensions.android.json.package-info
+com.google.api.client.extensions.android.package-info

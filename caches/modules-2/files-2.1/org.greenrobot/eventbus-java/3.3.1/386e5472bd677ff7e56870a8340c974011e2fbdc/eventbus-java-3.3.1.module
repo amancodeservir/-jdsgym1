@@ -1,0 +1,61 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.greenrobot",
+    "module": "eventbus-java",
+    "version": "3.3.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "6.8.3",
+      "buildId": "vdjucadn25epjd3cwellrypuqi"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "eventbus-java-3.3.1.jar",
+          "url": "eventbus-java-3.3.1.jar",
+          "size": 44118,
+          "sha512": "c34882282a9906399b63a4e75a1323080b5485e81402a38bea3e32b938a68984ed47ff6350f4526a7d26d6bda257e8bfd1dc7ab8c33341c4058fb394500b6a7f",
+          "sha256": "85f642378a25d5e41a69f8ba6cfb2fbe674e406b5437403e9f955f793d6cd991",
+          "sha1": "74487b0caceca6fcd1aff45d41a9cdc6910d7f5a",
+          "md5": "b00830a0bfddf5a4c4661faba357182f"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "eventbus-java-3.3.1.jar",
+          "url": "eventbus-java-3.3.1.jar",
+          "size": 44118,
+          "sha512": "c34882282a9906399b63a4e75a1323080b5485e81402a38bea3e32b938a68984ed47ff6350f4526a7d26d6bda257e8bfd1dc7ab8c33341c4058fb394500b6a7f",
+          "sha256": "85f642378a25d5e41a69f8ba6cfb2fbe674e406b5437403e9f955f793d6cd991",
+          "sha1": "74487b0caceca6fcd1aff45d41a9cdc6910d7f5a",
+          "md5": "b00830a0bfddf5a4c4661faba357182f"
+        }
+      ]
+    }
+  ]
+}

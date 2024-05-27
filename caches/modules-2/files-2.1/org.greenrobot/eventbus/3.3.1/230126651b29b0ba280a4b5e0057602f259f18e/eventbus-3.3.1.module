@@ -1,0 +1,77 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.greenrobot",
+    "module": "eventbus",
+    "version": "3.3.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "6.8.3",
+      "buildId": "vdjucadn25epjd3cwellrypuqi"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.greenrobot",
+          "module": "eventbus-java",
+          "version": {
+            "requires": "3.3.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "eventbus-3.3.1.aar",
+          "url": "eventbus-3.3.1.aar",
+          "size": 4638,
+          "sha512": "d970100a0e7d5b73a70a48b1c9ac1a19cbdb110ec0d795f2370e923769643119ca825f05f97152979022b1a51250c0709855eaf94c0d0d37963cb2d6d549c00b",
+          "sha256": "c9385f4a570f8b2ef6f8f752690077ed538c358fd4755032ab80501755838f11",
+          "sha1": "0d1e95a73a95f2c02af363524fa7f90daccbc063",
+          "md5": "497aad7f9f668ad2521e4943a9c4c309"
+        }
+      ]
+    },
+    {
+      "name": "releaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.greenrobot",
+          "module": "eventbus-java",
+          "version": {
+            "requires": "3.3.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "eventbus-3.3.1.aar",
+          "url": "eventbus-3.3.1.aar",
+          "size": 4638,
+          "sha512": "d970100a0e7d5b73a70a48b1c9ac1a19cbdb110ec0d795f2370e923769643119ca825f05f97152979022b1a51250c0709855eaf94c0d0d37963cb2d6d549c00b",
+          "sha256": "c9385f4a570f8b2ef6f8f752690077ed538c358fd4755032ab80501755838f11",
+          "sha1": "0d1e95a73a95f2c02af363524fa7f90daccbc063",
+          "md5": "497aad7f9f668ad2521e4943a9c4c309"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+com.virgilsecurity.android.ratchet
+string app_name

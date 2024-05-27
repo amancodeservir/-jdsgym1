@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:rkfitness/core/config/app_routes.dart';
 import 'package:rkfitness/data/model/OnboardingItem.dart';
@@ -53,7 +52,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       curve: Curves.ease,
                     );
                   } else {
-                    Get.offNamed(AppRoutes.OPTION);
+                    Get.offNamed(AppRoutes.LOGIN);  // Navigate to login screen
                   }
                 },
               ),

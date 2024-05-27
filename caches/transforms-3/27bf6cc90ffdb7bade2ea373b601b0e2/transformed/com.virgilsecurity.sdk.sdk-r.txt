@@ -1,0 +1,2 @@
+com.virgilsecurity.sdk.sdk
+string app_name

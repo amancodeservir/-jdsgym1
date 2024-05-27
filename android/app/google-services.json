@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "87003555730",
+    "project_id": "rkfitness-78b0c",
+    "storage_bucket": "rkfitness-78b0c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87003555730:android:053dd630ad5e90feb4034b",
+        "android_client_info": {
+          "package_name": "com.codeservir.rkfitness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "87003555730-6q6njcdjhntfq605jk0rj65qbet5j2e4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_5L7WYoQvmMz9M2bAeCd9U0u-lbZ6-Ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "87003555730-6q6njcdjhntfq605jk0rj65qbet5j2e4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

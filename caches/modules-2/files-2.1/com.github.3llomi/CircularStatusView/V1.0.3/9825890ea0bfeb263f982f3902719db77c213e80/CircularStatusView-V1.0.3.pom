@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.3llomi</groupId>
+  <artifactId>CircularStatusView</artifactId>
+  <version>V1.0.3</version>
+  <packaging>aar</packaging>
+  <name>3llomi/CircularStatusView</name>
+  <description>A Simple View that draws portions of a Circle depending on a number , just like what WhatsApp has done for Status</description>
+  <url>https://github.com/3llomi/CircularStatusView</url>
+  <inceptionYear>2018</inceptionYear>
+  <developers>
+    <developer>
+      <id>3llomi</id>
+      <name>AbdulAlim Rajjoub</name>
+      <email>contact@devlomi.com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git://github.com/3llomi/CircularStatusView.git</connection>
+    <developerConnection>scm:git://github.com/3llomi/CircularStatusView.git</developerConnection>
+    <url>git://github.com/3llomi/CircularStatusView.git</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>androidx.appcompat</groupId>
+      <artifactId>appcompat</artifactId>
+      <version>1.0.0</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,10 @@
+io.codetail.animation.RevealViewGroup
+io.codetail.animation.ViewAnimationUtils
+io.codetail.animation.ViewRevealManager
+io.codetail.animation.ViewRevealManager$1
+io.codetail.animation.ViewRevealManager$ChangeViewLayerTypeAdapter
+io.codetail.animation.ViewRevealManager$ClipRadiusProperty
+io.codetail.animation.ViewRevealManager$RevealValues
+io.codetail.view.BuildConfig
+io.codetail.widget.RevealFrameLayout
+io.codetail.widget.RevealLinearLayout

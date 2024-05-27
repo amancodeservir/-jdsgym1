@@ -1,0 +1,5 @@
+org.greenrobot.eventbus.HandlerPoster
+org.greenrobot.eventbus.android.AndroidComponentsImpl
+org.greenrobot.eventbus.android.AndroidLogger
+org.greenrobot.eventbus.android.BuildConfig
+org.greenrobot.eventbus.android.DefaultAndroidMainThreadSupport

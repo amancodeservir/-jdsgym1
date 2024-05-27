@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ShadowLayout"><attr format="boolean" name="sl_shadowed"/><attr format="dimension" name="sl_shadow_distance"/><attr format="integer" name="sl_shadow_angle"/><attr format="dimension" name="sl_shadow_radius"/><attr format="color" name="sl_shadow_color"/></declare-styleable>
+    <string name="app_name">ShadowLayout</string>
+</resources>

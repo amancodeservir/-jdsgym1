@@ -1,0 +1,59 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.getkeepsafe.relinker",
+    "module": "relinker",
+    "version": "1.4.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "6.5",
+      "buildId": "5j7szu26bvebrnivo6dkbdoalm"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "relinker-1.4.3.aar",
+          "url": "relinker-1.4.3.aar",
+          "size": 26415,
+          "sha512": "e9481fac45372f5d779794ed84d41eb95b0ee0c54482d71f8b368e5519181257f1330cda5cbde18c37627e82bd6a32faab5410a4ad8e34656ba75aacf6d077dc",
+          "sha256": "be0989bed0710d86a00347f56ca056e4be015cc4fe2ef92da82b5b89b9e07206",
+          "sha1": "c81dc600a66518c4b6519436fb9558372734b614",
+          "md5": "ed24a96623d9d0ab052e143adb057eda"
+        }
+      ]
+    },
+    {
+      "name": "releaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "relinker-1.4.3.aar",
+          "url": "relinker-1.4.3.aar",
+          "size": 26415,
+          "sha512": "e9481fac45372f5d779794ed84d41eb95b0ee0c54482d71f8b368e5519181257f1330cda5cbde18c37627e82bd6a32faab5410a4ad8e34656ba75aacf6d077dc",
+          "sha256": "be0989bed0710d86a00347f56ca056e4be015cc4fe2ef92da82b5b89b9e07206",
+          "sha1": "c81dc600a66518c4b6519436fb9558372734b614",
+          "md5": "ed24a96623d9d0ab052e143adb057eda"
+        }
+      ]
+    }
+  ]
+}

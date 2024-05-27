@@ -1,0 +1,8 @@
+com.google.android.gms.ads
+attr adSize
+attr adSizes
+attr adUnitId
+id layout
+layout admob_empty_layout
+style Theme_IAPTheme
+styleable AdsAttrs adSize adSizes adUnitId

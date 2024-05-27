@@ -1,0 +1,10 @@
+com.vanniktech.emoji.ios.IosEmoji
+com.vanniktech.emoji.ios.IosEmojiProvider
+com.vanniktech.emoji.ios.category.ActivitiesCategory
+com.vanniktech.emoji.ios.category.AnimalsAndNatureCategory
+com.vanniktech.emoji.ios.category.FlagsCategory
+com.vanniktech.emoji.ios.category.FoodAndDrinkCategory
+com.vanniktech.emoji.ios.category.ObjectsCategory
+com.vanniktech.emoji.ios.category.SmileysAndPeopleCategory
+com.vanniktech.emoji.ios.category.SymbolsCategory
+com.vanniktech.emoji.ios.category.TravelAndPlacesCategory

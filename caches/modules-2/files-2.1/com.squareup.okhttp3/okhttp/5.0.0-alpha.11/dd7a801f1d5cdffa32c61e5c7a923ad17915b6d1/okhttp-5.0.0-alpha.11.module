@@ -1,0 +1,113 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.squareup.okhttp3",
+    "module": "okhttp",
+    "version": "5.0.0-alpha.11",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.6"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "com.squareup.okio",
+          "module": "okio",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.7.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "okhttp-metadata-5.0.0-alpha.11.jar",
+          "url": "okhttp-5.0.0-alpha.11.jar",
+          "size": 13390,
+          "sha512": "658e4fc445d913a9edbdd1c3dbf0bc7abd60b3e5b18b6d9cf6b0c35749550efd4f181fa7a8943a54ef29b50eb1a9809b2e700e3c6384abec8eb2ee4e58e0cb1b",
+          "sha256": "9397cf4417c15534d0f5507f44b357404bf5ffdbb84b3332d12de83cdd3abb8e",
+          "sha1": "c971e8f02ddb288a0311cc80b6268091e20299fc",
+          "md5": "fd40535964e848d11eb7ea0b1aa3ad9f"
+        }
+      ]
+    },
+    {
+      "name": "jsApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../okhttp-js/5.0.0-alpha.11/okhttp-js-5.0.0-alpha.11.module",
+        "group": "com.squareup.okhttp3",
+        "module": "okhttp-js",
+        "version": "5.0.0-alpha.11"
+      }
+    },
+    {
+      "name": "jsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../okhttp-js/5.0.0-alpha.11/okhttp-js-5.0.0-alpha.11.module",
+        "group": "com.squareup.okhttp3",
+        "module": "okhttp-js",
+        "version": "5.0.0-alpha.11"
+      }
+    },
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../okhttp-jvm/5.0.0-alpha.11/okhttp-jvm-5.0.0-alpha.11.module",
+        "group": "com.squareup.okhttp3",
+        "module": "okhttp-jvm",
+        "version": "5.0.0-alpha.11"
+      }
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../okhttp-jvm/5.0.0-alpha.11/okhttp-jvm-5.0.0-alpha.11.module",
+        "group": "com.squareup.okhttp3",
+        "module": "okhttp-jvm",
+        "version": "5.0.0-alpha.11"
+      }
+    }
+  ]
+}

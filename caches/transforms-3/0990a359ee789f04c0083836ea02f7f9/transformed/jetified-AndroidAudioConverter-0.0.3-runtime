@@ -1,0 +1,7 @@
+cafe.adriel.androidaudioconverter.AndroidAudioConverter
+cafe.adriel.androidaudioconverter.AndroidAudioConverter$1
+cafe.adriel.androidaudioconverter.AndroidAudioConverter$2
+cafe.adriel.androidaudioconverter.AndroidAudioConverter$AudioFormat
+cafe.adriel.androidaudioconverter.callback.IConvertCallback
+cafe.adriel.androidaudioconverter.callback.IInitCallback
+cafe.adriel.androidaudiorecorder.BuildConfig

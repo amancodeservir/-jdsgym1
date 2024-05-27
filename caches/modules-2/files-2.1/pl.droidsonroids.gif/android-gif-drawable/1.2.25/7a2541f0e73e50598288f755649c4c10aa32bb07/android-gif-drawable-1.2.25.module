@@ -1,0 +1,107 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "pl.droidsonroids.gif",
+    "module": "android-gif-drawable",
+    "version": "1.2.25",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.5.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "android-gif-drawable-1.2.25.aar",
+          "url": "android-gif-drawable-1.2.25.aar",
+          "size": 144365,
+          "sha512": "5b79bc60a354f1c8aa9c8e9724e524997fc323077e646c6e48e811deb688dfe96b39429c51b1d15933a542de905ad9579ee4a19f4127c07b7c2d205c5d7dc68a",
+          "sha256": "e7f70204805b6d82e0ccb1a6a3925c3fd06ae8a93a255035daa8e21e50952bf2",
+          "sha1": "a7078398b3185c7dc339251694a85ede724adb1f",
+          "md5": "b402baeb3b9c6a1a4f8ae6a2e2a51d18"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "pl.droidsonroids.relinker",
+          "module": "relinker",
+          "version": {
+            "requires": "1.4.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "android-gif-drawable-1.2.25.aar",
+          "url": "android-gif-drawable-1.2.25.aar",
+          "size": 144365,
+          "sha512": "5b79bc60a354f1c8aa9c8e9724e524997fc323077e646c6e48e811deb688dfe96b39429c51b1d15933a542de905ad9579ee4a19f4127c07b7c2d205c5d7dc68a",
+          "sha256": "e7f70204805b6d82e0ccb1a6a3925c3fd06ae8a93a255035daa8e21e50952bf2",
+          "sha1": "a7078398b3185c7dc339251694a85ede724adb1f",
+          "md5": "b402baeb3b9c6a1a4f8ae6a2e2a51d18"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "android-gif-drawable-1.2.25-sources.jar",
+          "url": "android-gif-drawable-1.2.25-sources.jar",
+          "size": 47812,
+          "sha512": "48e9bbacaca0db7de9d25bd4e717c932903a7e73a0908abb466040808d5ef3ab097f1b0a3584e3bd5c1a493ff73c645c95161ae7fed5958d15049af32d9d399a",
+          "sha256": "d06874eb42f005b71a0d19b79a9318a73c81e33f90b6091f3ab4771214c081d9",
+          "sha1": "c70d6e55e3ca16d39e6839aacff88a8b0ab86eef",
+          "md5": "841f11766c3afd919af86a57cef3118a"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "android-gif-drawable-1.2.25-javadoc.jar",
+          "url": "android-gif-drawable-1.2.25-javadoc.jar",
+          "size": 477010,
+          "sha512": "9a78753a23c6a496003a3a577b0d1be068679132f64a2f51547c51552a59d8189af952c1d94d435dac61cee080144fff1a5606c247a5c76516c29b1ac22e22ab",
+          "sha256": "86e68463a7664e959490ee50949892c324eb433b2c4de098e6a8832926d7ef1a",
+          "sha1": "f047794870ff2d5fb04e80c9967708c0061df14c",
+          "md5": "ea772d4550b813c2f61cd6aebc3c90f2"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+com.virgilsecurity.crypto.ratchet.BuildConfig
+com.virgilsecurity.crypto.ratchet.GroupMsgType
+com.virgilsecurity.crypto.ratchet.MsgType
+com.virgilsecurity.crypto.ratchet.RatchetCommon
+com.virgilsecurity.crypto.ratchet.RatchetContextHolder
+com.virgilsecurity.crypto.ratchet.RatchetException
+com.virgilsecurity.crypto.ratchet.RatchetJNI
+com.virgilsecurity.crypto.ratchet.RatchetMessage
+com.virgilsecurity.crypto.ratchet.RatchetSession

@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rkfitness/core/config/app_routes.dart';
 import 'package:rkfitness/core/config/app_styles.dart';
+import 'package:rkfitness/presentation/controllers/auth_controller.dart';
 import 'package:rkfitness/presentation/view/custom_button.dart';
 import 'package:rkfitness/presentation/view/custom_circle_button.dart';
 import 'package:rkfitness/presentation/view/custom_devider.dart';
 
 class OptionScreen extends StatelessWidget {
+  const OptionScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +20,7 @@ class OptionScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Image.asset('assets/logo.png', height: 150),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             CustomButton(
@@ -42,20 +45,24 @@ class OptionScreen extends StatelessWidget {
                 CustomDivider(),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomCircleButton(
                   imageProvider: const AssetImage("assets/facebook.png"),
-                  onPressed: () {},
+                  onPressed: () {
+                   
+                  },
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 32,
                 ),
                 CustomCircleButton(
                   imageProvider: const AssetImage("assets/google.png"),
-                  onPressed: () {},
+                  onPressed: () {
+                      Get.find<AuthController>().signInWithGoogle();
+                  },
                 ),
               ],
             ),

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr format="color|reference" name="emojiBackground"/>
+    <attr format="color|reference" name="emojiDivider"/>
+    <attr format="color|reference" name="emojiIcons"/>
+    <attr format="dimension" name="emojiSize"/>
+    <color name="emoji_background">@color/emoji_white</color>
+    <color name="emoji_black">#ff000000</color>
+    <color name="emoji_divider">@color/emoji_gray20</color>
+    <color name="emoji_gray20">#ffcccccc</color>
+    <color name="emoji_gray70">#ff4d4d4d</color>
+    <color name="emoji_grey_900">#212121</color>
+    <color name="emoji_icons">@color/emoji_black</color>
+    <color name="emoji_white">#ffffffff</color>
+    <dimen name="emoji_grid_view_column_width">36dp</dimen>
+    <dimen name="emoji_grid_view_spacing">6dp</dimen>
+    <string name="define_emoji">year;owner</string>
+    <string name="library_emoji_author">Niklas Baudy</string>
+    <string name="library_emoji_isOpenSource">true</string>
+    <string name="library_emoji_libraryDescription">A simple library to add Emoji support to your Android Application.</string>
+    <string name="library_emoji_libraryName">Emoji</string>
+    <string name="library_emoji_libraryVersion">0.3.0</string>
+    <string name="library_emoji_libraryWebsite">https://github.com/vanniktech/Emoji</string>
+    <string name="library_emoji_licenseId">apache_2_0</string>
+    <string name="library_emoji_owner">Niklas Baudy</string>
+    <string name="library_emoji_repositoryLink">https://github.com/vanniktech/Emoji</string>
+    <string name="library_emoji_year">2016</string>
+    <style name="emoji_fade_animation_style">
+    <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+    <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+  </style>
+    <style name="emoji_slide_animation_style">
+    <item name="android:windowEnterAnimation">@anim/emoji_slide_down</item>
+    <item name="android:windowExitAnimation">@anim/emoji_slide_up</item>
+  </style>
+    <declare-styleable name="EmojiAutoCompleteTextView">
+    <attr name="emojiSize"/>
+  </declare-styleable>
+    <declare-styleable name="EmojiButton">
+    <attr name="emojiSize"/>
+  </declare-styleable>
+    <declare-styleable name="EmojiEditText">
+    <attr name="emojiSize"/>
+  </declare-styleable>
+    <declare-styleable name="EmojiMultiAutoCompleteTextView">
+    <attr name="emojiSize"/>
+  </declare-styleable>
+    <declare-styleable name="EmojiTextView">
+    <attr name="emojiSize"/>
+  </declare-styleable>
+</resources>

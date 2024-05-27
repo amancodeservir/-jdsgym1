@@ -1,0 +1,105 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../okhttp/5.0.0-alpha.11/okhttp-5.0.0-alpha.11.module",
+    "group": "com.squareup.okhttp3",
+    "module": "okhttp",
+    "version": "5.0.0-alpha.11",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.6"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.squareup.okio",
+          "module": "okio",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.7.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.7.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "okhttp-jvm-5.0.0-alpha.11.jar",
+          "url": "okhttp-jvm-5.0.0-alpha.11.jar",
+          "size": 853954,
+          "sha512": "6939ba8bc9ada71b778e16bf596e91f53a348101532d7360f5f475f1dcbcb9e58ce10f3f1fc08275d4ccc4c763f27d97bf6b6e08c7b0d55641c1b789f82244ad",
+          "sha256": "506a1d3aba9f99b55570c7f8813cd79a44946531f29050d5b938474efdb4cf80",
+          "sha1": "d29775a9116a8239cea8b969e63bfe7ea8794f94",
+          "md5": "d6aa1c7df5306256cf03a112ab5d2953"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.squareup.okio",
+          "module": "okio",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.7.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.7.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "okhttp-jvm-5.0.0-alpha.11.jar",
+          "url": "okhttp-jvm-5.0.0-alpha.11.jar",
+          "size": 853954,
+          "sha512": "6939ba8bc9ada71b778e16bf596e91f53a348101532d7360f5f475f1dcbcb9e58ce10f3f1fc08275d4ccc4c763f27d97bf6b6e08c7b0d55641c1b789f82244ad",
+          "sha256": "506a1d3aba9f99b55570c7f8813cd79a44946531f29050d5b938474efdb4cf80",
+          "sha1": "d29775a9116a8239cea8b969e63bfe7ea8794f94",
+          "md5": "d6aa1c7df5306256cf03a112ab5d2953"
+        }
+      ]
+    }
+  ]
+}
