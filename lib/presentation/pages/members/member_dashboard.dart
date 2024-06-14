@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rkfitness/core/config/app_colors.dart';
 import 'package:rkfitness/core/config/app_routes.dart';
+import 'package:rkfitness/core/config/app_styles.dart';
 import 'package:rkfitness/presentation/controllers/auth_controller.dart';
 import 'package:rkfitness/presentation/controllers/qr_scanner_controller.dart';
 import 'package:rkfitness/presentation/controllers/user_controller.dart';
@@ -44,141 +45,100 @@ class _MemberDashboardState extends State<MemberDashboard> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Container(
-            child: Row(
-              children: [
-                ClipRRect(
-                  child: Image.asset(
-                    'assets/logo.png',
-                    fit: BoxFit.fill,
-                    height: 64,
-                    width: 64,
-                  ),
+          backgroundColor: AppColors.primaryColor,
+          elevation: 0,
+          title: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset(
+                  'assets/logo.png',
+                  fit: BoxFit.fill,
+                  height: 40,
+                  width: 40,
                 ),
-                const SizedBox(width: 8.0),
-                Text(
-                  _currentIndex == 0
-                      ? 'RK FITNESS CLUB'
-                      : _getAppBarTitle(_currentIndex),
-                  style: const TextStyle(fontSize: 20),
+              ),
+              const SizedBox(width: 8.0),
+              Text(
+                'RK FITNESS CLUB',
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
                 ),
-                const Spacer(),
-                IconButton(
-                  onPressed: () {
-                    Get.offNamed(AppRoutes.QRSCANNER);
-                  },
-                  icon: const Icon(
-                    Icons.qr_code_scanner,
-                    size: 28,
-                  ),
-                ),
-                const SizedBox(width: 16.0),
-                IconButton(
-                  onPressed: () {
-                    Get.offNamed(AppRoutes.NOTIFICATIONS);
-                  },
-                  icon: const Icon(
-                    Icons.notifications_outlined,
-                    size: 28,
-                  ),
-                ),
-                const SizedBox(width: 8.0),
-              ],
+              ),
+            ],
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.offNamed(AppRoutes.QRSCANNER);
+              },
+              icon: const Icon(
+                Icons.qr_code_scanner,
+                size: 28,
+                color: Colors.white,
+              ),
             ),
-          ),
-        ),
-        body: IndexedStack(
-          index: _currentIndex,
-          children: [
-            MemberHomeScreen(),
-            MemberExerciseScreen(),
-            MemberActivityScreen(),
-            MemberProfileScreen(),
-          ],
-        ),
-        bottomNavigationBar: _buildBottomNavigationBar(),
-      ),
-    );
-  }
-
-  Container _buildBottomNavigationBar() {
-    return Container(
-      height: 60,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: _buildNavItem(0, Icons.home, 'Home'),
-          ),
-          Expanded(
-            child: _buildNavItem(1, Icons.fitness_center, 'Exercise'),
-          ),
-          Expanded(
-            child: _buildNavItem(2, Icons.local_activity, 'Activity'),
-          ),
-          Expanded(
-            child: _buildNavItem(3, Icons.person, 'Profile'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavItem(int index, IconData icon, String label) {
-    return Container(
-      child: IconButton(
-        onPressed: () => _onTabTapped(index),
-        icon: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: _currentIndex == index
-                  ? AppColors.primaryColor
-                  : AppColors.black1,
-            ),
-            const SizedBox(height: 4),
-            Flexible(
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  label,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: _currentIndex == index
-                        ? AppColors.primaryColor
-                        : AppColors.black1,
-                    fontSize: 12,
-                  ),
-                ),
+            IconButton(
+              onPressed: () {
+                Get.offNamed(AppRoutes.NOTIFICATIONS);
+              },
+              icon: const Icon(
+                Icons.notifications_outlined,
+                size: 28,
+                color: Colors.white,
               ),
             ),
           ],
         ),
+        body: Column(
+          children: [
+            Expanded(
+              child: IndexedStack(
+                index: _currentIndex,
+                children: [
+                  MemberHomeScreen(),
+                  MemberExerciseScreen(),
+                  MemberActivityScreen(),
+                  MemberProfileScreen(),
+                ],
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          selectedItemColor: AppColors.primaryColor,
+          unselectedItemColor: Colors.grey,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.fitness_center),
+              label: 'Exercise',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.local_activity),
+              label: 'Activity',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+              
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  String _getAppBarTitle(int index) {
-    switch (index) {
-      case 0:
-        return 'Home';
-      case 1:
-        return 'Exercise';
-      case 2:
-        return 'Activity';
-      case 3:
-        return 'Profile';
-      default:
-        return '';
-    }
-  }
-
-  void _onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
 
   Future<bool> _showExitConfirmationDialog() async {
     return await showDialog(

@@ -7,6 +7,12 @@ class AppStyle {
     fontWeight: FontWeight.bold,
     color: AppColors.primaryColor,
   );
+
+    static const TextStyle heading14 = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primaryColor,
+  );
   static const TextStyle headingBlack = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
@@ -16,14 +22,14 @@ class AppStyle {
     fontSize: 16,
     fontWeight: FontWeight.bold,
     color: AppColors.black,
-  ); 
-   static const TextStyle heading3Black = TextStyle(
+  );
+  static const TextStyle heading3Black = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.bold,
     color: AppColors.blackLight,
   );
 
-   static const TextStyle heading4Black = TextStyle(
+  static const TextStyle heading4Black = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.normal,
     color: AppColors.blackLight2,
@@ -44,21 +50,46 @@ class AppStyle {
     fontWeight: FontWeight.normal,
     color: AppColors.textColor,
   );
-    static const TextStyle subTitle = TextStyle(
+  static const TextStyle subTitle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.normal,
     color: AppColors.textColor,
   );
 
-    static const TextStyle whiteText14 = TextStyle(
+  static const TextStyle whiteText18 = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: AppColors.white,
+  );
+  static const TextStyle whiteText14 = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.bold,
     color: AppColors.white,
   );
 
-      static const TextStyle whiteText11 = TextStyle(
+  static const TextStyle whiteText11 = TextStyle(
     fontSize: 11,
     fontWeight: FontWeight.bold,
     color: AppColors.white,
   );
+
+    static const TextStyle redStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    color: AppColors.redColor,
+  );
+
+    static const TextStyle status = TextStyle(
+    fontSize: 11,
+    fontWeight: FontWeight.normal,
+    color: AppColors.primaryColor,
+  );
+
+    static const TextStyle placeholderStyle = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.normal,
+    color: AppColors.lightGrey,
+  );
+
+
 }

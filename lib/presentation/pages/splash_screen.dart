@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:rkfitness/core/config/app_routes.dart';
-import 'package:rkfitness/presentation/controllers/auth_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -26,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen>
         curve: Curves.easeIn,
       ),
     );
+
     _controller.forward();
   }
 
@@ -42,8 +40,8 @@ class _SplashScreenState extends State<SplashScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset('assets/logo.png', height: 150),
-              SizedBox(height: 20),
-              // CircularProgressIndicator(), // Optionally show a loading indicator
+              const SizedBox(height: 20),
+              CircularProgressIndicator(),
             ],
           ),
         ),

@@ -38,17 +38,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: AppColors.primaryColor,
         hintColor: AppColors.accentColor,
-        backgroundColor: AppColors.backgroundColor,
         textTheme: const TextTheme(
-          headline1: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textColor),
-          headline2: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textColor),
-        ),
+       
+        ), 
       ),
       initialRoute: AppRoutes.SPLASH,
       getPages: AppRouting.getAppRoutes, 

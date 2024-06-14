@@ -2,11 +2,15 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:get/get.dart';
 import 'package:rkfitness/core/utils/firebase_storeage_uploader.dart';
 import 'package:rkfitness/data/user_data.dart';
+import 'package:rkfitness/presentation/controllers/snackbar_controller.dart';
 
 class UserController extends GetxController {
+  ToastController toastController = ToastController();
   var userData = Rxn<UserData>();
   var attendanceData = Rxn<List<Map<String, dynamic>>>();
   var staffAndMembers = Rxn<List<UserData>>();
@@ -40,18 +44,47 @@ class UserController extends GetxController {
     }
   }
 
-  Future<void> updateUserStatus(String userId, String status) async {
+  Future<void> updateUserStatus(String userId, String status, DateTime dueDate,
+      BuildContext context) async {
+    final progress = ProgressHUD.of(context);
+    progress?.show();
     try {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userId)
-          .update({'status': status});
-      Get.snackbar('Success', 'User status updated successfully');
+          .update({'status': status, 'dueDate': dueDate});
+      toastController.showSuccessSnackbar(
+          'Success!', 'User status updated successfully');
+      fetchStaffAndMembers();
+      Get.back();
+      progress?.dismiss();
     } catch (e) {
       print('Error updating user status: $e');
-      Get.snackbar('Error', 'Failed to update user status');
+      toastController.showErrorSnackbar(
+          'Failed', 'Failed to update user status');
+      progress?.dismiss();
     }
   }
+
+  Future<void> sendReminder(String userId, Timestamp dueDate, String type,
+      BuildContext context) async {
+    final progress = ProgressHUD.of(context);
+    progress?.show();
+    try {
+      await FirebaseFirestore.instance
+          .collection('Notifications')
+          .add({'userId': userId, 'dueDate': dueDate, 'type': type});
+      toastController.showSuccessSnackbar(
+          'Success!', 'Reminder sent successfully');
+    } catch (e) {
+      print('Error sending reminder: $e');
+      toastController.showErrorSnackbar('Failed', 'Failed to send reminder');
+    } finally {
+      progress?.dismiss();
+    }
+  }
+
+  
 
   void selectUser(UserData user) {
     selectedUser.value = user;
@@ -206,5 +239,9 @@ class UserController extends GetxController {
       isLoading(false);
       throw e;
     }
+  }
+
+  String getUserRole() {
+    return userData.value!.role;
   }
 }

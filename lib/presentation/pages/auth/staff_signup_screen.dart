@@ -77,6 +77,7 @@ class _StaffSignupScreenState extends State<StaffSignupScreen> {
                       const SizedBox(height: 20),
                       CustomTextField(
                         labelText: 'Phone Number',
+                        
                         prefixIcon: Icons.phone,
                         placeholder: 'Enter your phone number',
                         controller: _mobileController,
@@ -87,6 +88,7 @@ class _StaffSignupScreenState extends State<StaffSignupScreen> {
                           }
                           return null;
                         },
+                         maxLength: 10,
                       ),
                       const SizedBox(height: 20),
                       CustomTextField(

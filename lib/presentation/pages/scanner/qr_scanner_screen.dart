@@ -4,10 +4,11 @@ import 'package:rkfitness/core/config/app_colors.dart';
 import 'package:rkfitness/core/config/app_routes.dart';
 import 'package:rkfitness/presentation/controllers/qr_scanner_controller.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:rkfitness/presentation/controllers/user_controller.dart';
 
 class QRScannerScreen extends StatelessWidget {
   final QRScannerController controller = Get.put(QRScannerController());
-
+  final UserController userController = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
@@ -17,12 +18,6 @@ class QRScannerScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('QR Scanner'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Get.offNamed(AppRoutes.MEMBERDASHBOARD);
-          },
-        ),
       ),
       body: Center(
         child: Column(

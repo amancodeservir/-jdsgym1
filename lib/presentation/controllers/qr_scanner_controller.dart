@@ -34,8 +34,7 @@ class QRScannerController extends GetxController {
           if (!alreadyCheckedIn) {
             await saveUserAttendanceToFirestore(userId, attendanceStatus, true);
           } else if (!alreadyCheckedOut) {
-            await saveUserAttendanceToFirestore(
-                userId, attendanceStatus, false);
+            await saveUserAttendanceToFirestore(userId, attendanceStatus, false);
             print('Check-out saved for user $userId');
           } else {
             print('User has already checked out today');
@@ -79,7 +78,7 @@ class QRScannerController extends GetxController {
         }
         scanCompleted = true;
         qrViewController?.dispose();
-        Get.offNamed(AppRoutes.MEMBERDASHBOARD);
+        Get.back();
         showScanner(false);
         isLoading(false); // Hide loader
 
@@ -121,11 +120,11 @@ class QRScannerController extends GetxController {
   }
 
   void toggleScanner() {
-    showScanner.toggle(); 
+    showScanner.toggle();
     if (!showScanner.value) {
-      qrViewController?.pauseCamera(); 
+      qrViewController?.pauseCamera();
     } else {
-      qrViewController?.resumeCamera(); 
+      qrViewController?.resumeCamera();
     }
   }
 

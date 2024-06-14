@@ -1,9 +1,0 @@
-com.google.cloud.http.BaseHttpServiceException
-com.google.cloud.http.CensusHttpModule
-com.google.cloud.http.CensusHttpModule$CensusHttpExecuteInterceptor
-com.google.cloud.http.CensusHttpModule$CensusHttpRequestInitializer
-com.google.cloud.http.CensusHttpModule$DefaultPropagationTextFormatSetter
-com.google.cloud.http.HttpTransportOptions
-com.google.cloud.http.HttpTransportOptions$1
-com.google.cloud.http.HttpTransportOptions$Builder
-com.google.cloud.http.HttpTransportOptions$DefaultHttpTransportFactory

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:rkfitness/core/config/app_colors.dart';
 import 'package:rkfitness/core/utils/custom_progress_indicator.dart';
 import 'package:rkfitness/presentation/controllers/snackbar_controller.dart';
 import 'package:rkfitness/presentation/controllers/user_controller.dart';
@@ -34,6 +35,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     profileImageUrl = userController.userData.value?.profilePicture ?? '';
     _mobileNumberController.text =
         userController.userData.value?.mobileNumber ?? '';
+    _dobController.text = userController.userData.value?.dob ?? '';
+    _addressController.text = userController.userData.value?.address ?? '';
   }
 
   @override
@@ -111,6 +114,43 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           }),
         ),
       ),
+    );
+  }
+
+  Widget _buildAvatarAndEditButton(String profilePicture) {
+    return Stack(
+      children: [
+        profilePicture.isNotEmpty
+            ? CircleAvatar(
+                radius: 50, backgroundImage: NetworkImage(profilePicture))
+            : const CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage('assets/default_avatar.png'),
+              ),
+        Positioned(
+          right: 2,
+          bottom: 1,
+          child: GestureDetector(
+            onTap: () {},
+            child: Container(
+              height: 32,
+              width: 32,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(80.0)),
+                color: AppColors.primaryColor,
+              ),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.edit,
+                  color: AppColors.white,
+                  size: 16,
+                ),
+                onPressed: () {},
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

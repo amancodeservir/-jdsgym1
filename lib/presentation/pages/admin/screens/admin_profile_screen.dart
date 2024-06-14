@@ -43,32 +43,6 @@ class AdminProfileScreen extends StatelessWidget {
     } else {
       return Stack(
         children: [
-          Positioned(
-            right: 10,
-            top: 16,
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.accentColor,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: CupertinoButton(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                child: const Text(
-                  "Send feedback",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: () {
-                  Get.toNamed(AppRoutes.FEEDBACK);
-                },
-              ),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -86,10 +60,7 @@ class AdminProfileScreen extends StatelessWidget {
                 _buildProfileInfoRow('Phone Number', userData.mobileNumber),
                 _buildProfileInfoRow('Location', userData.address),
                 Divider(height: 40, color: Colors.grey[400]),
-                _buildSectionTitle('Payment Information'),
-                _buildDueInfoRow('Payment due ', userData.dueDate),
-                _buildAccountInfoRow('Account ', userData.status),
-                Divider(height: 40, color: Colors.grey[400]),
+
                 _buildLogoutRow(context),
                 // Add more profile information rows as needed
               ],

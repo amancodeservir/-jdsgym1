@@ -42,32 +42,31 @@ class MemberProfileScreen extends StatelessWidget {
     } else {
       return Stack(
         children: [
-          Positioned(
-            right: 10,
-            top: 16,
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.accentColor,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: CupertinoButton(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                child: const Text(
-                  "Send feedback",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: () {
-                  Get.toNamed(AppRoutes.FEEDBACK);
-                },
-              ),
-            ),
-          ),
+      Positioned(
+  right: 10,
+  top: 16,
+  child: ElevatedButton(
+    onPressed: () {
+      Get.toNamed(AppRoutes.FEEDBACK);
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: AppColors.primaryColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    ),
+    child: Text(
+      "Send Feedback",
+      style: TextStyle(
+        fontSize: 14,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+  ),
+),
+
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(

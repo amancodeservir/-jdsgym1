@@ -86,6 +86,7 @@ class _MemberSignupScreenState extends State<MemberSignupScreen> {
                           }
                           return null;
                         },
+                        maxLength: 10,
                       ),
                       const SizedBox(height: 20),
                       CustomTextField(
