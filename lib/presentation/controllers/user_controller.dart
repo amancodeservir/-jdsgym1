@@ -14,6 +14,7 @@ class UserController extends GetxController {
   var userData = Rxn<UserData>();
   var attendanceData = Rxn<List<Map<String, dynamic>>>();
   var staffAndMembers = Rxn<List<UserData>>();
+  var attendanceDatas = Rxn<Map<DateTime, bool>>();
   var selectedUser = Rxn<UserData>();
   var isLoading = true.obs;
 
@@ -22,6 +23,7 @@ class UserController extends GetxController {
     super.onInit();
     fetchUserData();
     fetchAttendanceData();
+    fetchAttendanceDatas();
     fetchStaffAndMembers();
   }
 
@@ -84,8 +86,6 @@ class UserController extends GetxController {
     }
   }
 
-  
-
   void selectUser(UserData user) {
     selectedUser.value = user;
   }
@@ -136,6 +136,42 @@ class UserController extends GetxController {
               .toList();
         } else {
           print('Attendance data not found');
+        }
+      } catch (e) {
+        print('Error fetching attendance data: $e');
+        Get.snackbar('Error', 'Failed to fetch attendance data');
+      } finally {
+        isLoading(false);
+      }
+    } else {
+      print('User not logged in');
+      isLoading(false);
+    }
+  }
+
+  Future<void> fetchAttendanceDatas() async {
+    isLoading(true);
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        QuerySnapshot attendanceDocs = await FirebaseFirestore.instance
+            .collection('user_attendance')
+            .doc(user.uid)
+            .collection('attendances')
+            .get();
+        if (attendanceDocs.docs.isNotEmpty) {
+          //Convert Firestore data to Map<DateTime, bool>
+          Map<DateTime, bool> convertedData = {};
+          attendanceDocs.docs.forEach((doc) {
+            Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+            DateTime date = (data['date'] as Timestamp).toDate();
+            bool isPresent = data['checkIn'] is Timestamp;
+            convertedData[date] = isPresent;
+          });
+          attendanceDatas.value = convertedData;
+          print('AttendanceDatas :: ${attendanceDatas.value}');
+        } else {
+          print('AttendanceDatas data not found');
         }
       } catch (e) {
         print('Error fetching attendance data: $e');
@@ -225,11 +261,18 @@ class UserController extends GetxController {
   }
 
   Future<void> saveFeedback(
-      {required String feedback, required String userId}) async {
+      {required String feedback,
+      required String userId,
+      required String name,
+      required String email,
+      required String phone}) async {
     try {
       isLoading(true);
       final firestore = FirebaseFirestore.instance;
       await firestore.collection('feedback').add({
+        'name': name,
+        'email': email,
+        'phone': phone,
         'userId': userId,
         'feedback': feedback,
         'timestamp': FieldValue.serverTimestamp(),

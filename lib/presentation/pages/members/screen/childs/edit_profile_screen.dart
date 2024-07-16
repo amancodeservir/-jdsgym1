@@ -5,11 +5,13 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rkfitness/core/config/app_colors.dart';
+import 'package:rkfitness/core/config/app_styles.dart';
 import 'package:rkfitness/core/utils/custom_progress_indicator.dart';
 import 'package:rkfitness/presentation/controllers/snackbar_controller.dart';
 import 'package:rkfitness/presentation/controllers/user_controller.dart';
 import 'package:rkfitness/presentation/view/custom_button.dart';
 import 'package:intl/intl.dart';
+import 'package:rkfitness/presentation/view/custom_text_field.dart';
 
 class EditProfileScreen extends StatefulWidget {
   @override
@@ -43,7 +45,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Profile'),
+        title: const Text(
+          'Edit Profile',
+          style: TextStyle(color: Colors.white), // Adjust the color as needed
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+          color: Colors.white, // Adjust the color as needed
+        ),
+        iconTheme: const IconThemeData(
+            color: Colors.white), // Adjust the color as needed
       ),
       body: ProgressHUD(
         backgroundColor: Colors.black.withOpacity(0.5),
@@ -61,43 +73,124 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     children: [
                       GestureDetector(
                         onTap: () => _selectImage(context),
-                        child: _image != null && _image is File
-                            ? CircleAvatar(
-                                radius: 50,
-                                backgroundImage: FileImage(_image as File))
-                            : profileImageUrl!.isNotEmpty
-                                ? CircleAvatar(
-                                    radius: 50,
-                                    backgroundImage:
-                                        NetworkImage(profileImageUrl!))
-                                : const CircleAvatar(
-                                    radius: 50,
-                                    backgroundImage: AssetImage(
-                                        'assets/default_profile_image.jpg'),
+                        child: Center(
+                          child: Stack(
+                            children: [
+                              _buildAvatarAndEditButton(profileImageUrl!,
+                                  _nameController.text.toString(), context),
+                              Positioned(
+                                right: 0,
+                                bottom: 0,
+                                left: 0,
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: Container(
+                                    height: 40,
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 26.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      color: AppColors.white,
+                                      border: Border.all(
+                                          color: AppColors.lightGrey,
+                                          width: 0.5),
+                                    ),
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.camera_alt,
+                                            size: 20,
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.dark
+                                                    ? AppColors.primaryColor
+                                                    : Colors.black,
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            'Change',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Theme.of(context)
+                                                          .brightness ==
+                                                      Brightness.dark
+                                                  ? AppColors.primaryColor
+                                                  : Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 16),
-                      TextField(
+                      CustomTextField(
+                        labelText: 'Full Name',
+                        prefixIcon: Icons.person,
+                        placeholder: 'Enter your full name',
                         controller: _nameController,
-                        decoration: const InputDecoration(labelText: 'Name'),
+                        keyboardType: TextInputType.text,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your full name';
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(height: 16),
-                      TextField(
+                      CustomTextField(
+                        labelText: 'Phone Number',
+                        prefixIcon: Icons.phone,
+                        placeholder: 'Enter your phone number',
                         controller: _mobileNumberController,
-                        decoration:
-                            const InputDecoration(labelText: 'Mobile Number'),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your phone number';
+                          }
+                          return null;
+                        },
+                        maxLength: 10,
                       ),
                       const SizedBox(height: 16),
-                      TextField(
+                      CustomTextField(
+                        labelText: 'Date of Birth',
+                        prefixIcon: Icons.date_range,
+                        placeholder: 'Date of Birth',
                         controller: _dobController,
-                        decoration:
-                            const InputDecoration(labelText: 'Date of Birth'),
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please select DOB';
+                          } else if (!GetUtils.isEmail(value)) {
+                            return 'Please select DOB';
+                          }
+                          return null;
+                        },
                         onTap: () => _selectDate(context),
                       ),
                       const SizedBox(height: 16),
-                      TextField(
+                      CustomTextField(
+                        labelText: 'Address',
+                        prefixIcon: Icons.location_city,
+                        placeholder: ' Address',
                         controller: _addressController,
-                        decoration: const InputDecoration(labelText: 'Address'),
+                        keyboardType: TextInputType.text,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your address';
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(height: 32),
                       CustomButton(
@@ -117,37 +210,89 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  Widget _buildAvatarAndEditButton(String profilePicture) {
+  Widget _buildAvatar(
+      String profilePicture, String userName, BuildContext context) {
+    if (_image != null && _image is File) {
+      return CircleAvatar(
+        radius: 74,
+        backgroundImage: FileImage(_image as File),
+      );
+    } else if (profilePicture.isNotEmpty) {
+      return CircleAvatar(
+        radius: 74,
+        backgroundImage: NetworkImage(profilePicture),
+      );
+    } else {
+      // Display user's first initial on a red background circle
+      String initial = userName.isNotEmpty ? userName[0].toUpperCase() : '';
+      return CircleAvatar(
+        radius: 74,
+        backgroundColor: AppColors.primaryColor,
+        child: Text(
+          initial,
+          style: const TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      );
+    }
+  }
+
+  Widget _buildAvatarAndEditButton(
+      String profilePicture, String userName, BuildContext context) {
+    String initial = userName.isNotEmpty ? userName[0].toUpperCase() : '';
     return Stack(
       children: [
-        profilePicture.isNotEmpty
-            ? CircleAvatar(
-                radius: 50, backgroundImage: NetworkImage(profilePicture))
-            : const CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/default_avatar.png'),
-              ),
+        _buildAvatar(profilePicture, userName, context),
         Positioned(
-          right: 2,
-          bottom: 1,
+          right: 0,
+          bottom: 0,
+          left: 0,
           child: GestureDetector(
-            onTap: () {},
+            onTap: () {
+              _selectImage(context);
+            },
             child: Container(
-              height: 32,
-              width: 32,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(80.0)),
-                color: AppColors.primaryColor,
-              ),
-              child: IconButton(
-                icon: const Icon(
-                  Icons.edit,
+                height: 40,
+                margin: EdgeInsets.symmetric(horizontal: 26.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
                   color: AppColors.white,
-                  size: 16,
+                  border: Border.all(color: AppColors.lightGrey, width: 0.5),
                 ),
-                onPressed: () {},
-              ),
-            ),
+                child: GestureDetector(
+                  onTap: () {
+                    _selectImage(context);
+                  },
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.camera_alt,
+                          size: 20,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.primaryColor
+                              : Colors.black,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Change',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? AppColors.primaryColor
+                                    : Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
           ),
         ),
       ],

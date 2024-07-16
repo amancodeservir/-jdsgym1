@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:get/get.dart';
@@ -8,16 +7,18 @@ import 'package:rkfitness/core/config/app_colors.dart';
 import 'package:rkfitness/core/config/app_routes.dart';
 import 'package:rkfitness/core/utils/custom_progress_indicator.dart';
 import 'package:rkfitness/data/user_data.dart';
+import 'package:rkfitness/presentation/controllers/ThemeController.dart';
 import 'package:rkfitness/presentation/controllers/auth_controller.dart';
 import 'package:rkfitness/presentation/controllers/user_controller.dart';
 
 class AdminProfileScreen extends StatelessWidget {
   final UserController userController = Get.find<UserController>();
   final AuthController authController = Get.find<AuthController>();
+  final ThemeController themeController = Get.find<ThemeController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.bg_color,
       body: ProgressHUD(
         backgroundColor: Colors.black.withOpacity(0.5),
         indicatorWidget: CustomProgressIndicator(),
@@ -37,156 +38,192 @@ class AdminProfileScreen extends StatelessWidget {
     );
   }
 
+  void _handleLogout(BuildContext context) {
+    final progress = ProgressHUD.of(context);
+    progress?.show();
+    Future.delayed(const Duration(seconds: 2), () {
+      authController.signOut();
+      progress?.dismiss();
+    });
+  }
+
   Widget _buildProfile(UserData? userData, BuildContext context) {
     if (userData == null) {
       return const Center(child: Text('User data not available'));
     } else {
-      return Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildAvatarAndEditButton(userData.profilePicture),
-                const SizedBox(height: 20),
-                _buildUserName(userData.name),
-                const SizedBox(height: 8),
-                _buildUserEmail(userData.email),
-                Divider(height: 40, color: Colors.grey[400]),
-                _buildSectionTitle('Personal Information'),
-                const SizedBox(height: 12),
-                _buildProfileInfoRow('Date of Birth', userData.dob),
-                _buildProfileInfoRow('Phone Number', userData.mobileNumber),
-                _buildProfileInfoRow('Location', userData.address),
-                Divider(height: 40, color: Colors.grey[400]),
+      return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildAvatarAndEditButton(userData.profilePicture, userData.name,context),
+            _buildSection(Icons.person, 'Name', userData.name),
+            _buildSection(Icons.email, 'Email', userData.email),
+            // _buildSection(Icons.calendar_today, 'Date of Birth', userData.dob),
+            _buildSection(Icons.phone, 'Phone Number', userData.mobileNumber),
+            _buildSection(Icons.location_on, 'Address', userData.address),
+            // _buildSection2(Icons.payment, 'Payment Due', userData.dueDate),
+            // _buildSection3(Icons.account_balance_wallet, 'Account Status',
+            //     userData.status),
 
-                _buildLogoutRow(context),
-                // Add more profile information rows as needed
-              ],
+            _buildSwitchTile(
+              context: context,
+              title: 'Dark Mode',
+              icon: Icons.brightness_6,
+              value: themeController.isDarkMode,
+              onChanged: (value) {
+                themeController.toggleTheme();
+              },
             ),
-          ),
-        ],
+            const Divider(height: 30, color: Colors.grey),
+            // _buildFeedbackButton(context),
+
+            _buildLogoutButton(context),
+          ],
+        ),
       );
     }
   }
 
-  Widget _buildAvatarAndEditButton(String profilePicture) {
-    return Stack(
-      children: [
-        profilePicture.isNotEmpty
-            ? CircleAvatar(
-                radius: 50, backgroundImage: NetworkImage(profilePicture))
-            : const CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/default_avatar.png'),
-              ),
-        Positioned(
-          right: 2,
-          bottom: 1,
-          child: GestureDetector(
-            onTap: () {
-              Get.toNamed(AppRoutes.EDITPROFILE);
-            },
-            child: Container(
-              height: 32,
-              width: 32,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(80.0)),
-                color: AppColors.primaryColor,
-              ),
-              child: IconButton(
-                icon: const Icon(
-                  Icons.edit,
+    Widget _buildAvatar(String profilePicture, String userName, BuildContext context ) {
+    if (profilePicture.isNotEmpty) {
+      return CircleAvatar(
+        radius: 74,
+        backgroundImage: NetworkImage(profilePicture),
+      );
+    } else {
+      // Display user's first initial on a red background circle
+      String initial = userName.isNotEmpty ? userName[0].toUpperCase() : '';
+      return CircleAvatar(
+        radius: 74,
+        backgroundColor: AppColors.primaryColor,
+        child: Text(
+          initial,
+          style: const TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      );
+    }
+  }
+
+
+  Widget _buildAvatarAndEditButton(
+      String profilePicture, String userName ,BuildContext context) {
+         String initial = userName.isNotEmpty ? userName[0].toUpperCase() : '';
+    return Center(
+      child: Stack(
+        children: [
+          _buildAvatar(profilePicture,userName,context),
+          // CircleAvatar(
+          //   radius: 74,
+          //   backgroundImage: profilePicture.isNotEmpty
+          //       ? NetworkImage(profilePicture)
+          //       : const AssetImage('assets/default_avatar.png')
+          //           as ImageProvider,
+          // ),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            left: 0,
+            child: GestureDetector(
+              onTap: () {
+                Get.toNamed(AppRoutes.EDITPROFILE);
+              },
+              child: Container(
+                height: 40,
+                margin: EdgeInsets.symmetric(horizontal: 26.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
                   color: AppColors.white,
-                  size: 16,
+                  border: Border.all(color: AppColors.lightGrey, width: 0.5),
                 ),
-                onPressed: () {
-                  Get.toNamed(AppRoutes.EDITPROFILE);
-                },
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.camera_alt,
+                        size: 20,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.primaryColor
+                            : Colors.black,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Edit',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.primaryColor
+                              : Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+
+
+  Widget _buildSection(IconData icon, String title, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(icon, color: AppColors.primaryColor),
+            const SizedBox(width: 8),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
+        Text(
+          value,
+          style: const TextStyle(fontSize: 16, color: Colors.grey),
+        ),
+        Divider(height: 30, color: Colors.grey[400]),
       ],
     );
   }
 
-  Widget _buildUserName(String fullName) {
-    return Text(
-      fullName,
-      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-    );
-  }
-
-  Widget _buildUserEmail(String email) {
-    return Text(
-      email,
-      style: const TextStyle(fontSize: 16, color: Colors.grey),
-    );
-  }
-
-  Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-    );
-  }
-
-  Widget _buildProfileInfoRow(String title, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 1,
-            child: Text(
+  Widget _buildSection2(IconData icon, String title, Timestamp value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(icon, color: AppColors.primaryColor),
+            const SizedBox(width: 8),
+            Text(
               title,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Text(
+          _formatTimestamp(value),
+          style: TextStyle(
+            fontSize: 16,
+            color: value.seconds < Timestamp.now().seconds
+                ? AppColors.redColor
+                : Colors.grey[700],
           ),
-          const SizedBox(width: 8),
-          Expanded(
-            flex: 2,
-            child: Text(
-              value,
-              style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDueInfoRow(String title, Timestamp value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 1,
-            child: Text(
-              title,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            flex: 2,
-            child: Text(
-              _formatTimestamp(value),
-              style: TextStyle(
-                fontSize: 16,
-                color: value.seconds < Timestamp.now().seconds
-                    ? AppColors.redColor
-                    : Colors.grey[700],
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+        Divider(height: 30, color: Colors.grey[400]),
+      ],
     );
   }
 
@@ -195,61 +232,108 @@ class AdminProfileScreen extends StatelessWidget {
     return DateFormat('yyyy-MM-dd HH:mm a').format(dateTime);
   }
 
-  Widget _buildAccountInfoRow(String title, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 1,
-            child: Text(
+  Widget _buildSection3(IconData icon, String title, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(icon, color: AppColors.primaryColor),
+            const SizedBox(width: 8),
+            Text(
               title,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Text(
+          value,
+          style: TextStyle(
+              fontSize: 16,
+              color: value == 'Pending'
+                  ? AppColors.redColor
+                  : AppColors.primaryColor),
+        ),
+        Divider(height: 30, color: Colors.grey[400]),
+      ],
+    );
+  }
+
+  Widget _buildFeedbackButton(BuildContext context) {
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {
+          Get.toNamed(AppRoutes.FEEDBACK);
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
           ),
-          const SizedBox(width: 8),
-          Expanded(
-            flex: 2,
-            child: Text(
-              value,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            Icon(Icons.feedback, color: Colors.white),
+            SizedBox(width: 8),
+            Text(
+              "Send Feedback",
               style: TextStyle(
-                  fontSize: 16,
-                  color: value == 'Pending'
-                      ? AppColors.redColor
-                      : AppColors.primaryColor),
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildLogoutRow(BuildContext context) {
+  Widget _buildSwitchTile({
+    required BuildContext context,
+    required String title,
+    required IconData icon,
+    required bool value,
+    required ValueChanged<bool> onChanged,
+  }) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      leading: Icon(icon, color: AppColors.primaryColor),
+      title: Text(title,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      trailing: Switch(
+        value: value,
+        onChanged: onChanged,
+        activeColor: AppColors.primaryColor,
+      ),
+    );
+  }
+
+  Widget _buildLogoutButton(BuildContext context) {
     final progress = ProgressHUD.of(context);
-    return IconButton(
+    return Center(
+      child: ElevatedButton.icon(
         onPressed: () {
           progress?.show();
-
           Future.delayed(const Duration(seconds: 2), () {
             authController.signOut();
             progress?.dismiss();
           });
         },
-        icon: const Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            IconButton(
-                onPressed: null,
-                icon: Icon(
-                  Icons.logout,
-                  size: 28,
-                )),
-            Text(
-              'Logout',
-              style: TextStyle(fontSize: 16, color: AppColors.primaryColor),
-            ),
-          ],
-        ));
+        icon: const Icon(Icons.logout, size: 28, color: Colors.white),
+        label: const Text(
+          'Logout',
+          style: TextStyle(fontSize: 16, color: Colors.white),
+        ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+      ),
+    );
   }
 }

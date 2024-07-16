@@ -1,2 +1,0 @@
-com.virgilsecurity.sdk.crypto
-string app_name

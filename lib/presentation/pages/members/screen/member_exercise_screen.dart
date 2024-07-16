@@ -15,18 +15,29 @@ class _MemberExerciseScreenState extends State<MemberExerciseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+    final bgColor =
+        isDarkMode ? Colors.black : const Color.fromRGBO(220, 218, 218, 0.384);
+    final primaryColor =
+        isDarkMode ? AppColors.darkGrey : AppColors.primaryColor;
+    final shadowColor =
+        isDarkMode ? Colors.black54 : Colors.grey.withOpacity(0.1);
+    final textColor = isDarkMode ? Colors.white : Colors.black;
+
     return Scaffold(
+      backgroundColor: bgColor,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildExerciseBanner(context),
+            _buildExerciseBanner(context, primaryColor),
             const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Column(
                 children: [
-                  _buildSectionHeader('Trainers', context),
+                  _buildSectionHeader('Trainers', context, textColor),
                   _buildTrainerCards(context),
                 ],
               ),
@@ -36,9 +47,9 @@ class _MemberExerciseScreenState extends State<MemberExerciseScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Column(
                 children: [
-                  _buildSectionHeader('New workouts', context),
+                  _buildSectionHeader('New workouts', context, textColor),
                   const SizedBox(height: 8),
-                  _buildNewWorkoutSlider(context),
+                  _buildNewWorkoutSlider(context, primaryColor),
                 ],
               ),
             ),
@@ -48,34 +59,35 @@ class _MemberExerciseScreenState extends State<MemberExerciseScreen> {
     );
   }
 
-  Widget _buildSectionHeader(String title, BuildContext context) {
+  Widget _buildSectionHeader(
+      String title, BuildContext context, Color textColor) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           title,
-          style: AppStyle.headingBlack,
+          style: AppStyle.heading2Black.copyWith(color: textColor),
         ),
         TextButton(
           onPressed: () {
-            _navigateToTrainersScreen(title);
+            _navigateToScreen(title);
           },
           child: Text(
             'View More',
-            style: AppStyle.heading2.copyWith(color: AppColors.primaryColor),
+            style: AppStyle.body.copyWith(color: textColor),
           ),
         ),
       ],
     );
   }
 
-  void _navigateToTrainersScreen(String title) {
-    if (title == "Trainers") {
+  void _navigateToScreen(String title) {
+    if (title == 'Trainers') {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => TrainersScreen()),
       );
-    } else if (title == "New workouts") {
+    } else if (title == 'New workouts') {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => WorkoutsScreen()),
@@ -83,13 +95,13 @@ class _MemberExerciseScreenState extends State<MemberExerciseScreen> {
     }
   }
 
-  Widget _buildExerciseBanner(BuildContext context) {
+  Widget _buildExerciseBanner(BuildContext context, Color primaryColor) {
     return Container(
       margin: const EdgeInsets.all(8),
       width: MediaQuery.of(context).size.width,
       height: 230,
       decoration: BoxDecoration(
-        color: AppColors.primaryColor,
+        color: primaryColor,
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: Stack(
@@ -106,7 +118,7 @@ class _MemberExerciseScreenState extends State<MemberExerciseScreen> {
             right: 0,
             bottom: 0,
             child: Image.network(
-              'https://firebasestorage.googleapis.com/v0/b/rkfitness-78b0c.appspot.com/o/d0796413809bee72b13dcfa5be0511e2-removebg-preview%201.png?alt=media&token=c4e24483-5854-49bf-8130-ff8755439277',
+              'https://firebasestorage.googleapis.com/v0/b/rkfitness-78b0c.appspot.com/o/imp%2Fweight.png?alt=media&token=33fad8e0-84d1-4c78-a510-beb81b7e780e',
               fit: BoxFit.cover,
               height: 180,
             ),
@@ -131,16 +143,16 @@ class _MemberExerciseScreenState extends State<MemberExerciseScreen> {
               color: Colors.grey[200],
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 4,
-                  spreadRadius: 2,
-                  offset: Offset(0, 2),
+                  color: Colors.grey,
+                  blurRadius: 1,
+                  spreadRadius: 1,
+                  offset: Offset(0, 1),
                 ),
               ],
             ),
             child: Center(
               child: Image.network(
-                'https://firebasestorage.googleapis.com/v0/b/rkfitness-78b0c.appspot.com/o/trained%20.png?alt=media&token=f56ca4aa-f71b-438e-86de-66dff93cc903',
+                'https://firebasestorage.googleapis.com/v0/b/rkfitness-78b0c.appspot.com/o/imp%2Ftrainer.webp?alt=media&token=f37808e7-5dc5-426a-8e17-e8b7101a0afb',
                 fit: BoxFit.fill,
                 height: 54,
                 width: 54,
@@ -152,7 +164,7 @@ class _MemberExerciseScreenState extends State<MemberExerciseScreen> {
     );
   }
 
-  Widget _buildNewWorkoutSlider(BuildContext context) {
+  Widget _buildNewWorkoutSlider(BuildContext context, Color primaryColor) {
     return Column(
       children: [
         CarouselSlider.builder(
@@ -175,14 +187,14 @@ class _MemberExerciseScreenState extends State<MemberExerciseScreen> {
           itemBuilder: (context, index, realIndex) {
             return Container(
               decoration: BoxDecoration(
-                color: AppColors.primaryColor,
+                color: primaryColor,
                 borderRadius: BorderRadius.circular(16.0),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 4,
-                    spreadRadius: 2,
-                    offset: Offset(0, 2),
+                    color: Colors.grey,
+                    blurRadius: 1,
+                    spreadRadius: 1,
+                    offset: Offset(0, 0.5),
                   ),
                 ],
               ),
@@ -201,7 +213,7 @@ class _MemberExerciseScreenState extends State<MemberExerciseScreen> {
                     right: 16,
                     bottom: 16,
                     child: Image.network(
-                      'https://firebasestorage.googleapis.com/v0/b/rkfitness-78b0c.appspot.com/o/newworkout.png?alt=media&token=289d944b-4fb4-433b-acdb-49d2b7b2aa8c',
+                      'https://firebasestorage.googleapis.com/v0/b/rkfitness-78b0c.appspot.com/o/imp%2Fwo-removebg-preview.png?alt=media&token=0a0b3bf0-43d8-46f8-b49c-ab29996c1ac8',
                       fit: BoxFit.cover,
                       height: 180,
                     ),

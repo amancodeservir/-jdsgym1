@@ -1,42 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:rkfitness/core/config/app_colors.dart';
 
-class AttandanceCalendar extends StatelessWidget {
+class AttendanceCalendar extends StatelessWidget {
   final List<DateTime> datesToShow;
+  final Map<DateTime, bool> attendanceData;
 
-  AttandanceCalendar({required this.datesToShow});
+  const AttendanceCalendar(
+      {super.key, required this.datesToShow, required this.attendanceData});
+
+  DateTime normalizeDate(DateTime date) {
+    return DateTime(date.year, date.month, date.day);
+  }
 
   @override
   Widget build(BuildContext context) {
-    datesToShow.sort((a, b) => a.weekday.compareTo(b.weekday));
+    List<DateTime> normalizedDates =
+        datesToShow.map((date) => normalizeDate(date)).toList();
+    normalizedDates.sort((a, b) => a.compareTo(b)); // Sort by actual date
 
-    return Container(
-      height: 200,
-      color: Colors.grey[200],
-      padding: const EdgeInsets.all(8),
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 5,
+    return Column(
+      children: [
+        GridView.count(
+          crossAxisCount: 6,
           crossAxisSpacing: 8,
           mainAxisSpacing: 8,
+          shrinkWrap:
+              true, // Make the GridView take up only as much space as it needs
+          physics: NeverScrollableScrollPhysics(), // Disable scrolling
+          children: List.generate(normalizedDates.length, (index) {
+            DateTime date = normalizedDates[index];
+            bool isPresent = attendanceData[normalizeDate(date)] ?? false;
+            print('Date in calendar: $date');
+            print('Attendance data: ${attendanceData[normalizeDate(date)]}');
+            print('Attendance data: ${attendanceData}');
+            print('Is present: $isPresent');
+            return buildDateBox(context, date, isPresent);
+          }),
         ),
-        itemCount: datesToShow.length,
-        itemBuilder: (context, index) {
-          return buildDateBox(index, datesToShow[index]);
-        },
-      ),
+      ],
     );
   }
 
-  Widget buildDateBox(int index, DateTime date) {
-    bool isPresent = index % 2 == 0;
-    bool isAbsent = index % 3 == 0;
+  Widget buildDateBox(BuildContext context, DateTime date, bool isPresent) {
+    Color borderColor = isPresent ? Colors.transparent : Colors.red;
+    Color textColor = Theme.of(context).brightness == Brightness.dark
+        ? (isPresent ? Colors.white : Colors.black)
+        : (isPresent ? Colors.white : Colors.black);
 
     return Container(
       decoration: BoxDecoration(
-        color: isPresent ? AppColors.primaryColor : Colors.white,
+        color: isPresent ? AppColors.greenColor : Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: isAbsent ? Colors.red : Colors.transparent),
+        border: Border.all(color: borderColor, width: 0.3),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -44,13 +59,19 @@ class AttandanceCalendar extends StatelessWidget {
           Text(
             _getDayOfWeek(date),
             style: TextStyle(
-                color: isPresent ? Colors.white : Colors.black,
-                fontWeight: FontWeight.bold),
+              color: textColor,
+              fontWeight: FontWeight.normal,
+              fontSize: 11,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
             '${date.day}',
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontWeight: FontWeight.normal,
+              color: textColor,
+              fontSize: 11,
+            ),
           ),
         ],
       ),

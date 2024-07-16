@@ -73,189 +73,277 @@ class StaffMemberCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserController userController = Get.find<UserController>();
+
     return Container(
-      margin: const EdgeInsets.only(top: 16),
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.0),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-        border: Border.all(color: AppColors.lightGrey),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: user.profilePicture != null &&
-                          user.profilePicture!.isNotEmpty
-                      ? NetworkImage(user.profilePicture!)
-                      : AssetImage('assets/default_avatar.png')
-                          as ImageProvider,
-                ),
-                const SizedBox(width: 16.0),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(user.name, style: AppStyle.heading2Black),
-                      const SizedBox(height: 4.0),
-                      Text(user.email, style: AppStyle.subTitle),
-                    ],
-                  ),
+      child: Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 8),
+            padding: EdgeInsets.only(left: 80, top: 8, bottom: 8, right: 8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16.0),
+              border: Border.all(color: Colors.white),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                  offset: Offset(0, 1),
                 ),
               ],
             ),
-            const SizedBox(height: 16.0),
-             
-           
-            _buildDueInfoRow('Payment due ', user.dueDate),
-                const SizedBox(height: 4.0),
-             Text('Status: ${user.status}', style: AppStyle.heading3Black),
-
-            const SizedBox(height: 4.0),
-            if (user.dueDate.compareTo(Timestamp.now()) < 0 &&
-                user.status == 'Accepted')
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  ElevatedButton.icon(
-                    icon: const Icon(
-                      Icons.date_range,
-                      size: 11,
-                    ), // Add an appropriate icon here
-                    label: const Text(
-                      'Extend Due Date',
-                      style: AppStyle.whiteText11,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildInfoSection(Icons.person, 'Name', user.name,
+                              AppStyle.heading2Black),
+                          _buildInfoSection(Icons.email, 'Email', user.email,
+                              AppStyle.subTitle),
+                          _buildInfoSection(
+                              Icons.calendar_today,
+                              'Due Date',
+                              _formatTimestamp(user.dueDate),
+                              TextStyle(
+                                fontSize: 16,
+                                color: user.dueDate.seconds <
+                                        Timestamp.now().seconds
+                                    ? AppColors.redColor
+                                    : Colors.grey[700],
+                              )),
+                          _buildInfoSection(
+                              Icons.info,
+                              'Status',
+                              user.status,
+                              TextStyle(
+                                color: user.status == 'Accepted'
+                                    ? AppColors.greenColor
+                                    : Colors.red,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ],
+                      ),
                     ),
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.green,
+                    const SizedBox(width: 16.0),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (user.dueDate.compareTo(Timestamp.now()) < 0 &&
+                              user.status == 'Accepted')
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                ElevatedButton.icon(
+                                  icon: const Icon(
+                                    Icons.date_range,
+                                    size: 11,
+                                  ), // Add an appropriate icon here
+                                  label: const Text(
+                                    'Extend Due',
+                                    style: AppStyle.whiteText10,
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: Colors.green,
+                                  ),
+                                  onPressed: () => Get.to(() =>
+                                      ExtendDueDateScreen(userId: user.userId)),
+                                ),
+                                const SizedBox(width: 16),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: Colors.red,
+                                  ),
+                                  onPressed: () => sendReminder(
+                                    user.name,
+                                    _formatTimestamp(user.dueDate),
+                                    user.mobileNumber,
+                                    user.email,
+                                  ),
+                                  child: const Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        'Reminder',
+                                        style: AppStyle.whiteText10,
+                                      ),
+                                      SizedBox(
+                                          width:
+                                              8.0), // Adjust the space between text and icon
+                                      Icon(
+                                        Icons.send,
+                                        size: 11,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          const SizedBox(height: 24.0),
+                          if (user.status == 'Pending')
+                            Obx(() {
+                              final isLoading = userController.isLoading.value;
+                              return isLoading
+                                  ? Center(child: CircularProgressIndicator())
+                                  : Row(
+                                      children: [
+                                        ElevatedButton.icon(
+                                          icon: const Icon(Icons.check),
+                                          label: const Text(
+                                            'Accept',
+                                            style: AppStyle.whiteText11,
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                            foregroundColor: Colors.white,
+                                            backgroundColor: Colors.green,
+                                          ),
+                                          onPressed: onAccept,
+                                        ),
+                                        const SizedBox(width: 8.0),
+                                        ElevatedButton.icon(
+                                          icon: const Icon(Icons.close),
+                                          label: const Text(
+                                            'Decline',
+                                            style: AppStyle.whiteText11,
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                            foregroundColor: Colors.white,
+                                            backgroundColor: Colors.red,
+                                          ),
+                                          onPressed: onReject,
+                                        ),
+                                      ],
+                                    );
+                            })
+                          else
+                            Container()
+                        ],
+                      ),
                     ),
-                    onPressed: () =>
-                        Get.to(() => ExtendDueDateScreen(userId: user.userId)),
-                  ),
-                  const SizedBox(width: 16),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.red,
-                    ),
-                    onPressed: () => sendReminder(
-                      user.name,
-                      _formatTimestamp(user.dueDate),
-                      user.mobileNumber,
-                      user.email,
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Send Reminder',
-                          style: AppStyle.whiteText11,
-                        ),
-                        SizedBox(
-                            width:
-                                8.0), // Adjust the space between text and icon
-                        Icon(
-                          Icons.send,
-                          size: 11,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                    const SizedBox(width: 16.0),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            child: _buildAvatarAndEditButton(
+                user!.profilePicture, user.name, context),
+            left: 8,
+            top: 20,
+          ),
+          Positioned(
+            right: 0,
+            top: 8,
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.0),
+                color: AppColors.primaryColor,
               ),
-            if (user.status == 'Pending')
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.check),
-                    label: const Text(
-                      'Accept',
-                      style: AppStyle.whiteText11,
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.green,
-                    ),
-                    onPressed: onAccept,
-                  ),
-                  const SizedBox(width: 16.0),
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.close),
-                    label: const Text(
-                      'Decline',
-                      style: AppStyle.whiteText11,
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.red,
-                    ),
-                    onPressed: onReject,
-                  ),
-                ],
-              )
-            else
-              Container()
-          ],
-        ),
+              child: Text(user.role, style: AppStyle.whiteText11),
+            ),
+          )
+        ],
       ),
     );
   }
-}
 
-Widget _buildDueInfoRow(String title, Timestamp value) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 0.0),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildInfoSection(
+      IconData icon, String title, String value, TextStyle textStyle) {
+    return Row(
       children: [
-        Expanded(
-          flex: 1,
-          child: Text(
-            title,
-            style: AppStyle.heading3Black,
+        if (title != 'Name')
+          Icon(
+            icon,
+            color: AppColors.primaryColor,
+            size: 18,
           ),
+        if (title != 'Name') const SizedBox(width: 8),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 4.0),
+            Text(
+              value,
+              style: textStyle,
+            ),
+          ],
         ),
-        const SizedBox(width: 8),
-        Expanded(
-          flex: 2,
+      ],
+    );
+  }
+
+  Widget _buildAvatarAndEditButton(
+      String profilePicture, String userName, BuildContext context) {
+    if (profilePicture.isNotEmpty) {
+      return Center(
+        child: CircleAvatar(
+          radius: 32,
+          backgroundImage: NetworkImage(profilePicture),
+        ),
+      );
+    } else {
+      // Display user's first initial on a red background circle
+      String initial = userName.isNotEmpty ? userName[0].toUpperCase() : '';
+      return Center(
+        child: CircleAvatar(
+          radius: 32,
+          backgroundColor: AppColors.primaryColor,
           child: Text(
-            _formatTimestamp(value),
-            style: TextStyle(
-              fontSize: 16,
-              color: value.seconds < Timestamp.now().seconds
-                  ? AppColors.redColor
-                  : Colors.grey[700],
+            initial,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
           ),
         ),
-      ],
-    ),
-  );
-}
+      );
+    }
+  }
 
-String _formatTimestamp(Timestamp timestamp) {
-  DateTime dateTime = timestamp.toDate();
-  return DateFormat('yyyy-MM-dd HH:mm a').format(dateTime);
-}
+  Widget _buildDueInfoRow(String title, Timestamp value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 0.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [],
+      ),
+    );
+  }
 
-void sendReminder(
-    String userName, String dueDate, String mobileNumber, String email) {
-  String message = '''
+  Widget _buildStatusRow(String title, String status) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 0.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [],
+      ),
+    );
+  }
+
+  String _formatTimestamp(Timestamp timestamp) {
+    DateTime dateTime = timestamp.toDate();
+    return DateFormat('yyyy-MM-dd HH').format(dateTime);
+  }
+
+  void sendReminder(
+      String userName, String dueDate, String mobileNumber, String email) {
+    String message = '''
 *Dear $userName*,
 
 Your due date is: $dueDate.
@@ -265,5 +353,6 @@ Please pay your fee to extend your subscription.
 Download our app: https://play.google.com/store/apps/details?id=com.codeservir.rkfitness
 ''';
 
-  Share.share(message);
+    Share.share(message);
+  }
 }

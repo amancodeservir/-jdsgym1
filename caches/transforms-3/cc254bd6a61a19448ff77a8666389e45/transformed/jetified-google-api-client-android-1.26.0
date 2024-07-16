@@ -1,8 +1,0 @@
-com.google.api.client.googleapis.extensions.android.accounts.GoogleAccountManager
-com.google.api.client.googleapis.extensions.android.accounts.package-info
-com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential$RequestHandler
-com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAuthIOException
-com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException
-com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
-com.google.api.client.googleapis.extensions.android.gms.auth.package-info

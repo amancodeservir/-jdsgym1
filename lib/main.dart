@@ -6,6 +6,8 @@ import 'package:rkfitness/core/config/app_colors.dart';
 import 'package:rkfitness/core/config/app_constant.dart';
 import 'package:rkfitness/core/config/app_routes.dart';
 import 'package:rkfitness/core/config/app_routing.dart';
+import 'package:rkfitness/core/config/app_theme.dart';
+import 'package:rkfitness/presentation/controllers/ThemeController.dart';
 import 'package:rkfitness/presentation/controllers/auth_controller.dart';
 import 'package:rkfitness/presentation/controllers/user_controller.dart';
 
@@ -26,24 +28,22 @@ void main() async {
   }
   Get.put(AuthController());
   Get.put(UserController());
+  Get.put(ThemeController());
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  final ThemeController themeController = Get.put(ThemeController());
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: AppConstants.appName,
-      theme: ThemeData(
-        primaryColor: AppColors.primaryColor,
-        hintColor: AppColors.accentColor,
-        textTheme: const TextTheme(
-       
-        ), 
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeController.theme,
       initialRoute: AppRoutes.SPLASH,
-      getPages: AppRouting.getAppRoutes, 
+      getPages: AppRouting.getAppRoutes,
     );
   }
 }

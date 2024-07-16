@@ -4,6 +4,7 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rkfitness/core/config/app_colors.dart';
+import 'package:rkfitness/core/config/app_routes.dart';
 import 'package:rkfitness/core/config/app_styles.dart';
 import 'package:rkfitness/core/utils/custom_progress_indicator.dart';
 import 'package:rkfitness/presentation/controllers/user_controller.dart';
@@ -16,10 +17,15 @@ class UserProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = userController.selectedUser.value;
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Profile'),
+        title: const Text(
+          'User Profile',
+          style: AppStyle.whiteText18,
+        ),
+        leading: const BackButton(
+          color: Colors.white,
+        ),
       ),
       body: ProgressHUD(
         backgroundColor: Colors.black.withOpacity(0.5),
@@ -35,79 +41,14 @@ class UserProfileScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          shape: BoxShape.circle,
-                        ),
-                        child: CircleAvatar(
-                          radius: 50,
-                          backgroundImage: user!.profilePicture != null &&
-                                  user.profilePicture.isNotEmpty
-                              ? NetworkImage(user.profilePicture!)
-                              : const AssetImage(
-                                      'assets/images/default_avatar.png')
-                                  as ImageProvider,
-                        ),
-                      ),
+                      _buildAvatarAndEditButton(user!.profilePicture,user.name, context),
                       const SizedBox(height: 16.0),
-                      Center(
-                        child: Text(
-                          user!.name,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineLarge
-                              ?.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      const SizedBox(height: 16.0),
-                      ListTile(
-                        leading: const Icon(Icons.person),
-                        title: const Text(
-                          'Role',
-                          style: AppStyle.heading2Black,
-                        ),
-                        subtitle: Text(
-                          user.role,
-                          style: AppStyle.body,
-                        ),
-                      ),
-                      ListTile(
-                        leading: const Icon(Icons.email),
-                        title: const Text(
-                          'Email',
-                          style: AppStyle.heading2Black,
-                        ),
-                        subtitle: Text(
-                          user.email,
-                          style: AppStyle.body,
-                        ),
-                      ),
-                      ListTile(
-                        leading: const Icon(Icons.info),
-                        title: const Text(
-                          'Status',
-                          style: AppStyle.heading2Black,
-                        ),
-                        subtitle: Text(
-                          user.status,
-                          style: AppStyle.body,
-                        ),
-                      ),
-                      ListTile(
-                        leading: const Icon(Icons.calendar_today),
-                        title: const Text(
-                          'Due Date',
-                          style: AppStyle.heading2Black,
-                        ),
-                        subtitle: Text(
-                          _formatTimestamp(user.dueDate),
-                          style: user.dueDate.compareTo(Timestamp.now()) < 0
-                              ? AppStyle.redStyle
-                              : AppStyle.body,
-                        ),
-                      ),
+                      _buildSection(Icons.person, 'Name', user.name),
+                      _buildSection(Icons.email, 'Email', user.email),
+                      _buildSection(Icons.person, 'Role', user.role),
+                      _buildSection3(Icons.info, 'Status', user.status),
+                      _buildSection2(
+                          Icons.payment, 'Payment Due', user.dueDate),
                       if (user.dueDate.compareTo(Timestamp.now()) < 0 &&
                           user.status == 'Accepted')
                         Row(
@@ -204,6 +145,116 @@ class UserProfileScreen extends StatelessWidget {
           }),
         ),
       ),
+    );
+  }
+
+
+  Widget _buildAvatarAndEditButton(String profilePicture, String userName, BuildContext context ) {
+    if (profilePicture.isNotEmpty) {
+      return Center(
+        child: CircleAvatar(
+          radius: 64,
+          backgroundImage: NetworkImage(profilePicture),
+        ),
+      );
+    } else {
+      // Display user's first initial on a red background circle
+      String initial = userName.isNotEmpty ? userName[0].toUpperCase() : '';
+      return Center(
+        child: CircleAvatar(
+          radius: 64,
+          backgroundColor: AppColors.primaryColor,
+          child: Text(
+            initial,
+            style: const TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
+
+  Widget _buildSection2(IconData icon, String title, Timestamp value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(icon, color: AppColors.primaryColor),
+            const SizedBox(width: 8),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Text(
+          _formatTimestamp(value),
+          style: TextStyle(
+            fontSize: 16,
+            color: value.seconds < Timestamp.now().seconds
+                ? AppColors.redColor
+                : Colors.grey[700],
+          ),
+        ),
+        Divider(height: 30, color: Colors.grey[400]),
+      ],
+    );
+  }
+
+  Widget _buildSection3(IconData icon, String title, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(icon, color: AppColors.primaryColor),
+            const SizedBox(width: 8),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Text(
+          value,
+          style: TextStyle(
+              fontSize: 16,
+              color: value == 'Pending'
+                  ? AppColors.redColor
+                  : AppColors.primaryColor),
+        ),
+        Divider(height: 30, color: Colors.grey[400]),
+      ],
+    );
+  }
+
+  Widget _buildSection(IconData icon, String title, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(icon, color: AppColors.primaryColor),
+            const SizedBox(width: 8),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        Text(
+          value,
+          style: const TextStyle(fontSize: 16, color: Colors.grey),
+        ),
+        Divider(height: 30, color: Colors.grey[400]),
+      ],
     );
   }
 

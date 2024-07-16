@@ -16,8 +16,19 @@ class QRScannerScreen extends StatelessWidget {
         ? 250.0
         : 300.0;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('QR Scanner'),
+     appBar: AppBar(
+        title: const Text(
+          'ScanQR',
+          style: TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+          color: Colors.white,
+        ),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: Center(
         child: Column(

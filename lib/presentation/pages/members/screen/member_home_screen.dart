@@ -1,28 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rkfitness/core/config/app_colors.dart';
-import 'package:rkfitness/core/config/app_styles.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:rkfitness/presentation/controllers/user_controller.dart';
 
 class MemberHomeScreen extends StatelessWidget {
   final UserController userController = Get.find<UserController>();
+  List<Map<String, dynamic>> dummyWorkouts = [
+    {
+      'title': 'Yoga',
+      'description': 'Start your day with a peaceful yoga session.',
+      'imagePath': 'assets/one.png',
+    },
+    {
+      'title': 'Cardio',
+      'description': 'High-intensity cardio workout for maximum fat burn.',
+      'imagePath': 'assets/two.png',
+    },
+    {
+      'title': 'Strength',
+      'description':
+          'Build muscle and strength with this weightlifting session.',
+      'imagePath': 'assets/three.jpeg',
+    },
+    {
+      'title': 'Pilates ',
+      'description':
+          'Strengthen your core and improve flexibility with pilates.',
+      'imagePath': 'assets/four.png',
+    },
+    {
+      'title': 'HIIT',
+      'description': 'Short but intense workout to boost metabolism.',
+      'imagePath': 'assets/five.png',
+    },
+    {
+      'title': 'Stretching ',
+      'description':
+          'Relax and improve flexibility with a soothing stretching session.',
+      'imagePath': 'assets/five.png',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+    final bgColor =
+        isDarkMode ? Colors.black : const Color.fromRGBO(220, 218, 218, 0.384);
+    final cardColor = isDarkMode ? Colors.grey[800] : Colors.white;
+    final shadowColor =
+        isDarkMode ? Colors.black54 : Colors.grey.withOpacity(0.1);
+
     return Scaffold(
-      backgroundColor: AppColors.bg_color,
+      backgroundColor: bgColor,
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildHeader(context),
-                _buildCarousel(),
+                _buildHeader(context, theme),
+                _buildCarousel(theme, cardColor!, shadowColor),
                 const SizedBox(height: 20),
-                _buildCategoriesSection(),
+                _buildCategoriesSection(theme, cardColor, shadowColor),
                 const SizedBox(height: 20),
-                _buildDailyExercisesSection(),
+                _buildDailyExercisesSection(theme, cardColor, shadowColor),
               ],
             ),
           );
@@ -31,7 +73,7 @@ class MemberHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader(BuildContext context, ThemeData theme) {
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -39,21 +81,21 @@ class MemberHomeScreen extends StatelessWidget {
         children: [
           Text(
             'Welcome, ${userController.userData.value!.name}',
-            style: AppStyle.heading,
+            style: theme.textTheme.titleLarge,
           ),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             'What do you want to workout today?',
-            style: AppStyle.heading2,
+            style: theme.textTheme.bodyMedium,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildCarousel() {
+  Widget _buildCarousel(ThemeData theme, Color cardColor, Color shadowColor) {
     return CarouselSlider.builder(
-      itemCount: 3,
+      itemCount: dummyWorkouts.length,
       options: CarouselOptions(
         height: 200,
         autoPlay: true,
@@ -68,217 +110,243 @@ class MemberHomeScreen extends StatelessWidget {
       itemBuilder: (BuildContext context, int index, int realIndex) {
         return SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: _buildWorkoutItem(index),
+          child: _buildWorkoutItem(index, theme, cardColor, shadowColor),
         );
       },
     );
   }
 
-  Widget _buildWorkoutItem(int index) {
+  Widget _buildWorkoutItem(
+      int index, ThemeData theme, Color cardColor, Color shadowColor) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: AppColors.black,
+        color: cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.redAccent.withOpacity(0.5),
+            color: shadowColor,
             spreadRadius: 2,
             blurRadius: 4,
             offset: const Offset(0, 3),
           ),
         ],
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            _getWorkoutTitle(index),
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            _getWorkoutDescription(index),
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.white70,
-            ),
-          ),
-          const Spacer(),
-          Container(
-            padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              color: AppColors.primaryColor,
-            ),
-            child: InkWell(
-              onTap: () {
-                // Add your action here
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: const [
-                  Text(
-                    'START',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+          Expanded(
+            flex: 2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _getWorkoutTitle(index),
+                  style: theme.textTheme.labelLarge,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  _getWorkoutDescription(index),
+                  style: theme.textTheme.bodyLarge,
+                ),
+                const Spacer(),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 16.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: theme.primaryColor,
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      // Add your action here
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'START',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(
+                          Icons.arrow_right_alt,
+                          size: 16,
+                          color: Colors.white,
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(width: 8),
-                  Icon(
-                    Icons.arrow_right_alt,
-                    size: 16,
-                    color: Colors.white,
-                  ),
-                ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 16), // Adjust spacing as needed
+          Expanded(
+            flex: 1, // Adjust flex values as needed
+            child: Center(
+              child: Container(
+                width: 120,
+                height: 120,
+                child: Image.asset(
+                  dummyWorkouts[index]['imagePath'],
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildCategoriesSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          const Row(
-            children: [
-              Text(
-                'Categories',
-                style: AppStyle.headingBlack,
-              ),
-              Spacer(),
-              Text(
-                'See all',
-                style: AppStyle.heading2,
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          _buildCategories(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCategories() {
-    return SizedBox(
-      height: 84,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: const [
-          CategoryItem(
-            title: 'Weightlifting',
-            icon: Icons.fitness_center,
-          ),
-          SizedBox(width: 8),
-          CategoryItem(
-            title: 'Yoga',
-            icon: Icons.spa,
-          ),
-          SizedBox(width: 8),
-          CategoryItem(
-            title: 'Cardio',
-            icon: Icons.directions_run,
-          ),
-          SizedBox(width: 8),
-          CategoryItem(
-            title: 'Stretching',
-            icon: Icons.accessibility_new,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDailyExercisesSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          const Row(
-            children: [
-              Text(
-                'Daily Exercises',
-                style: AppStyle.headingBlack,
-              ),
-              Spacer(),
-              Text(
-                'See all',
-                style: AppStyle.heading2,
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          _buildDailyExercises(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDailyExercises() {
-    return ListView(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      children: const [
-        ExerciseItem(
-          title: 'Push Ups',
-          subTitle: '20 Times',
-          description: '6 Minutes',
-          icon: Icons.fitness_center,
-        ),
-        SizedBox(height: 8),
-        ExerciseItem(
-          title: 'Running',
-          subTitle: '4 Km',
-          description: '10 Minutes',
-          icon: Icons.directions_run,
-        ),
-        SizedBox(height: 8),
-        ExerciseItem(
-          title: 'Natrajasana Yoga Pose',
-          subTitle: '2-6 Times',
-          description: '15 Minutes',
-          icon: Icons.spa,
-        ),
-        SizedBox(height: 8),
-        ExerciseItem(
-          title: 'Stretching',
-          subTitle: '20 Times',
-          description: '6 Minutes',
-          icon: Icons.accessibility_new,
-        ),
-      ],
     );
   }
 
   String _getWorkoutTitle(int index) {
-    List<String> titles = [
-      'Start practicing \n Your workout!',
-      'Cardio Blast',
-      'Leg Day',
-    ];
-    return titles[index % titles.length];
+    // Replace with your logic to get workout title based on index
+    return dummyWorkouts[index]['title'];
   }
 
   String _getWorkoutDescription(int index) {
-    List<String> descriptions = [
-      '45 minutes',
-      '30 minutes',
-      '60 minutes',
-    ];
-    return descriptions[index % descriptions.length];
+    // Replace with your logic to get workout description based on index
+    return dummyWorkouts[index]['description'];
   }
+}
+
+Widget _buildCategoriesSection(
+    ThemeData theme, Color cardColor, Color shadowColor) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16),
+    child: Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              'Categories',
+              style: theme.textTheme.labelLarge,
+            ),
+            const Spacer(),
+            Text(
+              'See all',
+              style: theme.textTheme.bodyMedium,
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        _buildCategories(theme, cardColor, shadowColor),
+      ],
+    ),
+  );
+}
+
+Widget _buildCategories(ThemeData theme, Color cardColor, Color shadowColor) {
+  return SizedBox(
+    height: 84,
+    child: ListView(
+      scrollDirection: Axis.horizontal,
+      children: const [
+        CategoryItem(
+          title: 'Weightlifting',
+          icon: Icons.fitness_center,
+        ),
+        SizedBox(width: 8),
+        CategoryItem(
+          title: 'Yoga',
+          icon: Icons.spa,
+        ),
+        SizedBox(width: 8),
+        CategoryItem(
+          title: 'Cardio',
+          icon: Icons.directions_run,
+        ),
+        SizedBox(width: 8),
+        CategoryItem(
+          title: 'Stretching',
+          icon: Icons.accessibility_new,
+        ),
+      ],
+    ),
+  );
+}
+
+Widget _buildDailyExercisesSection(
+    ThemeData theme, Color cardColor, Color shadowColor) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16),
+    child: Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              'Daily Exercises',
+              style: theme.textTheme.labelLarge,
+            ),
+            const Spacer(),
+            Text(
+              'See all',
+              style: theme.textTheme.bodyMedium,
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        _buildDailyExercises(theme, cardColor, shadowColor),
+      ],
+    ),
+  );
+}
+
+Widget _buildDailyExercises(
+    ThemeData theme, Color cardColor, Color shadowColor) {
+  return ListView(
+    physics: const NeverScrollableScrollPhysics(),
+    shrinkWrap: true,
+    children: const [
+      ExerciseItem(
+        title: 'Push Ups',
+        subTitle: '20 Times',
+        description: '6 Minutes',
+        icon: Icons.fitness_center,
+      ),
+      SizedBox(height: 8),
+      ExerciseItem(
+        title: 'Running',
+        subTitle: '4 Km',
+        description: '10 Minutes',
+        icon: Icons.directions_run,
+      ),
+      SizedBox(height: 8),
+      ExerciseItem(
+        title: 'Natrajasana Yoga Pose',
+        subTitle: '2-6 Times',
+        description: '15 Minutes',
+        icon: Icons.spa,
+      ),
+      SizedBox(height: 8),
+      ExerciseItem(
+        title: 'Stretching',
+        subTitle: '20 Times',
+        description: '6 Minutes',
+        icon: Icons.accessibility_new,
+      ),
+    ],
+  );
+}
+
+String _getWorkoutTitle(int index) {
+  List<String> titles = [
+    'Start practicing \n Your workout!',
+    'Cardio Blast',
+    'Leg Day',
+  ];
+  return titles[index % titles.length];
+}
+
+String _getWorkoutDescription(int index) {
+  List<String> descriptions = [
+    '45 minutes',
+    '30 minutes',
+    '60 minutes',
+  ];
+  return descriptions[index % descriptions.length];
 }
 
 class CategoryItem extends StatelessWidget {
@@ -292,16 +360,22 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+    final cardColor = isDarkMode ? Colors.grey[800] : Colors.white;
+    final shadowColor =
+        isDarkMode ? Colors.black54 : Colors.grey.withOpacity(0.1);
+
     return Container(
       height: 84,
       width: 84,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardColor,
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: shadowColor,
             spreadRadius: 2,
             blurRadius: 4,
             offset: const Offset(0, 3),
@@ -312,17 +386,14 @@ class CategoryItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
-            child: Icon(icon, size: 32),
+            child: Icon(icon, size: 32, color: theme.iconTheme.color),
           ),
           const SizedBox(height: 8),
           Flexible(
             child: Text(
               title,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
-              ),
+              style: theme.textTheme.bodySmall,
             ),
           ),
         ],
@@ -346,6 +417,12 @@ class ExerciseItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+    final cardColor = isDarkMode ? Colors.grey[800] : Colors.white;
+    final shadowColor =
+        isDarkMode ? Colors.black54 : Colors.grey.withOpacity(0.1);
+
     return Container(
       margin: const EdgeInsets.only(bottom: 8.0),
       child: Row(
@@ -355,18 +432,18 @@ class ExerciseItem extends StatelessWidget {
             width: 64,
             padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: cardColor,
               borderRadius: BorderRadius.circular(8.0),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
+                  color: shadowColor,
                   spreadRadius: 2,
                   blurRadius: 4,
                   offset: const Offset(0, 3),
                 ),
               ],
             ),
-            child: Icon(icon, size: 32),
+            child: Icon(icon, size: 32, color: theme.iconTheme.color),
           ),
           Expanded(
             child: Container(
@@ -376,32 +453,23 @@ class ExerciseItem extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: theme.textTheme.bodyMedium,
                   ),
                   Text(
                     subTitle,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
-                    ),
+                    style: theme.textTheme.bodySmall,
                   ),
                   Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.watch_later,
-                        color: Colors.blue,
+                        color: theme.primaryColor,
                         size: 16,
                       ),
                       const SizedBox(width: 2),
                       Text(
                         description,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[600],
-                        ),
+                        style: theme.textTheme.bodySmall,
                       ),
                     ],
                   ),

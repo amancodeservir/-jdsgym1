@@ -67,6 +67,13 @@ class AppStyle {
     color: AppColors.white,
   );
 
+
+  static const TextStyle whiteText10 = TextStyle(
+    fontSize: 11,
+    fontWeight: FontWeight.bold,
+    color: AppColors.white,
+  );
+
   static const TextStyle whiteText11 = TextStyle(
     fontSize: 11,
     fontWeight: FontWeight.bold,
@@ -82,13 +89,13 @@ class AppStyle {
     static const TextStyle status = TextStyle(
     fontSize: 11,
     fontWeight: FontWeight.normal,
-    color: AppColors.primaryColor,
+    color: Color.fromARGB(255, 33, 32, 32),
   );
 
     static const TextStyle placeholderStyle = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.normal,
-    color: AppColors.lightGrey,
+    color: Color.fromARGB(131, 139, 136, 139),
   );
 
 

@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:rkfitness/core/config/app_colors.dart';
 import 'package:rkfitness/core/config/app_styles.dart';
+import 'package:rkfitness/presentation/pages/WorkoutDetailsPage.dart';
 
 class WorkoutsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Workouts'),
-        backgroundColor: AppColors.primaryColor,
+        title: const Text(
+          'Workout',
+          style: TextStyle(color: Colors.white), // Adjust the color as needed
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+          color: Colors.white, // Adjust the color as needed
+        ),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -17,7 +28,10 @@ class WorkoutsScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                // Handle navigation to detailed workout view
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WorkoutDetailsPage()),
+                );
               },
               child: Container(
                 margin: const EdgeInsets.only(bottom: 16.0),
@@ -54,13 +68,6 @@ class WorkoutsScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.arrow_forward_ios,
-                          color: AppColors.primaryColor),
-                      onPressed: () {
-                        // Handle navigation to detailed workout view
-                      },
                     ),
                   ],
                 ),

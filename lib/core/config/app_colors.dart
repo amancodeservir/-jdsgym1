@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color primaryColor = Colors.teal;
+  static const Color primaryColor = Color.fromARGB(255, 212, 32, 41);
   static const Color lightPrimaryColor = Color.fromARGB(19, 70, 179, 203);
   static const Color lightGreyColor = Color.fromARGB(5, 107, 107, 107);
   static const Color accentColor = Color(0xFFFF5722);
@@ -11,7 +11,7 @@ class AppColors {
   static const Color blackLight2 = Color.fromARGB(221, 77, 76, 76);
 
   // Additional colors
-  static const Color appBarColor = Color(0xFF303F9F);
+  static const Color appBarColor = Colors.black87;
   static const Color buttonColor = Color(0xFFCDDC39);
   static const Color black1 = Color.fromARGB(255, 150, 146, 149);
   static const Color white = Color.fromARGB(255, 255, 255, 255);
@@ -21,7 +21,11 @@ class AppColors {
   static const Color darkGrey = Color.fromARGB(141, 133, 196, 210);
   static const Color black = Color.fromARGB(255, 0, 0, 0);
   static const Color bg_color = Color.fromARGB(98, 220, 218, 218);
-  static const Color greenColor = Color.fromARGB(255, 2, 103, 14);
+  static const Color greenColor =Colors.green;
 
   static const Color inputFillColor = Color.fromARGB(74, 215, 242, 240);
+  static const Color blue =  Colors.blue;
+ 
+
+
 }

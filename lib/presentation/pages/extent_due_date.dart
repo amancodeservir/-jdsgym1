@@ -28,7 +28,6 @@ class _ExtendDueDateScreenState extends State<ExtendDueDateScreen> {
           'Extend Due Date',
           style: AppStyle.whiteText18,
         ),
-        backgroundColor: Colors.teal,
       ),
       body: ProgressHUD(
         backgroundColor: Colors.black.withOpacity(0.5),
@@ -65,29 +64,46 @@ class _ExtendDueDateScreenState extends State<ExtendDueDateScreen> {
                             ),
                           ],
                         ),
-                        child: CalendarDatePicker(
-                          initialDate: _selectedDate,
-                          firstDate: DateTime(2020),
-                          lastDate: DateTime(2101),
-                          onDateChanged: (date) {
-                            setState(() {
-                              _selectedDate = date;
-                            });
-                          },
+                        child: Theme(
+                          // Wrap CalendarDatePicker with Theme to customize for light/dark mode
+                          data: Theme.of(context).copyWith(
+                            // Customize colors for light mode
+                            colorScheme: Theme.of(context).colorScheme.copyWith(
+                                  primary:
+                                      AppColors.primaryColor, // Primary color
+                                  onPrimary:
+                                      Colors.white, // Text color on primary
+                                  surface: Colors.white, // Background color
+                                  onSurface:
+                                      Colors.black87, // Text color on surface
+                                ),
+                            // Customize colors for dark mode
+                            brightness: Theme.of(context).brightness,
+                          ),
+                          child: CalendarDatePicker(
+                            initialDate: _selectedDate,
+                            firstDate: DateTime(2020),
+                            lastDate: DateTime(2101),
+                            onDateChanged: (date) {
+                              setState(() {
+                                _selectedDate = date;
+                              });
+                            },
+                          ),
                         ),
                       ),
                       const SizedBox(height: 40),
                       Center(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.teal,
+                            foregroundColor: Colors.white,
+                            backgroundColor: AppColors.primaryColor,
                             padding: EdgeInsets.symmetric(
-                              horizontal: 30,
-                              vertical: 15,
-                            ),
+                                horizontal: 30, vertical: 15),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
+                            elevation: 3,
                           ),
                           onPressed: () async {
                             final progress = ProgressHUD.of(context);
@@ -111,11 +127,11 @@ class _ExtendDueDateScreenState extends State<ExtendDueDateScreen> {
                               ),
                             );
                           },
-                          child: Container(
-                            width: 300,
-                            child: const Text(
-                              'Submit',
-                              style: AppStyle.whiteText14,
+                          child: Text(
+                            'Extend Due Date ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),

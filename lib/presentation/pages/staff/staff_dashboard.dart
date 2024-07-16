@@ -44,7 +44,6 @@ class _StaffDashboardState extends State<StaffDashboard> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.primaryColor,
           elevation: 0,
           title: Row(
             children: [
@@ -54,17 +53,10 @@ class _StaffDashboardState extends State<StaffDashboard> {
                   'assets/logo.png',
                   fit: BoxFit.fill,
                   height: 40,
-                  width: 40,
+                  width: 100,
                 ),
               ),
               const SizedBox(width: 8.0),
-              const Text(
-                'RK FITNESS CLUB',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
-              ),
             ],
           ),
           actions: [
@@ -80,7 +72,7 @@ class _StaffDashboardState extends State<StaffDashboard> {
             ),
             IconButton(
               onPressed: () {
-                 Get.toNamed(AppRoutes.NOTIFICATIONS);
+                Get.toNamed(AppRoutes.NOTIFICATIONS);
               },
               icon: const Icon(
                 Icons.notifications_outlined,

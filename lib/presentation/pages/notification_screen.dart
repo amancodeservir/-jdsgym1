@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:rkfitness/core/config/app_colors.dart';
 import 'package:rkfitness/core/config/app_routes.dart';
+import 'package:rkfitness/core/config/app_styles.dart';
 import 'package:rkfitness/core/utils/custom_progress_indicator.dart';
 import 'package:rkfitness/presentation/controllers/snackbar_controller.dart';
 import 'package:rkfitness/presentation/controllers/user_controller.dart';
@@ -29,14 +31,21 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   // Dummy notification list
   List<Map<String, String>> _notifications = [
-    {'title': 'Order Shipped', 'subtitle': 'Your order has been shipped.'},
-    {'title': 'Payment Successful', 'subtitle': 'Your payment was successful.'},
-    {'title': 'New Message', 'subtitle': 'New message from John Doe.'},
+    {'title': 'Order Shipped', 
+    'subtitle': 'Your order has been shipped.',
+    'sender':'Raman'
+    },
+    {'title': 'Payment Successful', 'subtitle': 'Your payment was successful.',
+    'sender':'Raman'},
+    {'title': 'New Message', 'subtitle': 'New message from John Doe.',
+    'sender':'Dinesh'},
     {
       'title': 'Appointment Confirmed',
-      'subtitle': 'Your appointment is confirmed.'
+      'subtitle': 'Your appointment is confirmed.',
+    'sender':'Sharma'
     },
-    {'title': 'Special Offer', 'subtitle': 'Special offer just for you!'},
+    {'title': 'Special Offer', 'subtitle': 'Special offer just for you!',
+    'sender':'Abhishek'},
   ];
 
   void _handleBackPress() {
@@ -72,7 +81,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notifications'),
+        title: const Text(
+          'Notifications',
+          style: AppStyle.whiteText18,
+        ),
+        leading: BackButton(
+          color: Colors.white,
+        ),
       ),
       body: ProgressHUD(
         backgroundColor: Colors.black.withOpacity(0.5),
@@ -92,17 +107,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               itemCount: _notifications.length,
                               itemBuilder: (context, index) {
                                 return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8.0),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
                                   child: Card(
-                                    elevation: 2,
+                                    elevation: 1,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: ListTile(
-                                      leading: Icon(
-                                        Icons.notifications,
-                                        color: Theme.of(context).primaryColor,
+                                      leading: Container(
+                                        width: 48,
+                                        height: 48,
+                                        child: _buildAvatar('',  _notifications[index]['sender']!, context),
                                       ),
                                       title: Align(
                                         alignment: Alignment.centerLeft,
@@ -115,7 +131,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                       ),
                                       subtitle: Text(
                                           _notifications[index]['subtitle']!),
-                                      trailing: const Icon(Icons.arrow_forward_ios),
                                       onTap: () {
                                         // Handle notification tap
                                       },
@@ -142,4 +157,33 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
+  Widget _buildAvatar(
+      String profilePicture, String userName, BuildContext context) {
+    if (_image != null && _image is File) {
+      return CircleAvatar(
+        radius: 74,
+        backgroundImage: FileImage(_image as File),
+      );
+    } else if (profilePicture.isNotEmpty) {
+      return CircleAvatar(
+        radius: 74,
+        backgroundImage: NetworkImage(profilePicture),
+      );
+    } else {
+      // Display user's first initial on a red background circle
+      String initial = userName.isNotEmpty ? userName[0].toUpperCase() : '';
+      return CircleAvatar(
+        radius: 74,
+        backgroundColor: AppColors.primaryColor,
+        child: Text(
+          initial,
+          style: const TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      );
+    }
+  }
 }

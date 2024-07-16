@@ -45,7 +45,6 @@ class _MemberDashboardState extends State<MemberDashboard> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.primaryColor,
           elevation: 0,
           title: Row(
             children: [
@@ -55,23 +54,16 @@ class _MemberDashboardState extends State<MemberDashboard> {
                   'assets/logo.png',
                   fit: BoxFit.fill,
                   height: 40,
-                  width: 40,
+                  width: 100,
                 ),
               ),
               const SizedBox(width: 8.0),
-              Text(
-                'RK FITNESS CLUB',
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
-              ),
             ],
           ),
           actions: [
             IconButton(
               onPressed: () {
-                Get.offNamed(AppRoutes.QRSCANNER);
+                Get.toNamed(AppRoutes.QRSCANNER);
               },
               icon: const Icon(
                 Icons.qr_code_scanner,
@@ -81,7 +73,7 @@ class _MemberDashboardState extends State<MemberDashboard> {
             ),
             IconButton(
               onPressed: () {
-                Get.offNamed(AppRoutes.NOTIFICATIONS);
+              Get.toNamed(AppRoutes.NOTIFICATIONS);
               },
               icon: const Icon(
                 Icons.notifications_outlined,
@@ -107,6 +99,7 @@ class _MemberDashboardState extends State<MemberDashboard> {
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: (index) {
             setState(() {
@@ -131,14 +124,12 @@ class _MemberDashboardState extends State<MemberDashboard> {
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: 'Profile',
-              
             ),
           ],
         ),
       ),
     );
   }
-
 
   Future<bool> _showExitConfirmationDialog() async {
     return await showDialog(
