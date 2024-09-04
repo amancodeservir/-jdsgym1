@@ -16,6 +16,7 @@ import 'package:rkfitness/presentation/pages/scanner/qr_scanner_screen.dart';
 import 'package:rkfitness/presentation/pages/splash_screen.dart';
 import 'package:rkfitness/presentation/pages/auth/staff_signup_screen.dart';
 import 'package:rkfitness/presentation/pages/staff/staff_dashboard.dart';
+import 'package:rkfitness/presentation/pages/term_and_condition.dart';
 
 class AppRouting {
   static final List<GetPage> getAppRoutes = [
@@ -23,8 +24,8 @@ class AppRouting {
     GetPage(name: AppRoutes.ONBOARDING, page: () => OnboardingScreen()),
     GetPage(name: AppRoutes.LOGIN, page: () => LoginScreen()),
     GetPage(name: AppRoutes.MEMBERDASHBOARD, page: () => MemberDashboard()),
-       GetPage(name: AppRoutes.STAFFDASHBOARD, page: () => StaffDashboard()),
-            GetPage(name: AppRoutes.ADMINDASHBOARD, page: () => AdminDashboard()),
+    GetPage(name: AppRoutes.STAFFDASHBOARD, page: () => StaffDashboard()),
+    GetPage(name: AppRoutes.ADMINDASHBOARD, page: () => AdminDashboard()),
     GetPage(name: AppRoutes.OPTION, page: () => OptionScreen()),
     GetPage(name: AppRoutes.SIGNUPOPTION, page: () => SignupOptionScreen()),
     GetPage(name: AppRoutes.MEMBERSIGNUP, page: () => MemberSignupScreen()),
@@ -32,6 +33,8 @@ class AppRouting {
     GetPage(name: AppRoutes.QRSCANNER, page: () => QRScannerScreen()),
     GetPage(name: AppRoutes.EDITPROFILE, page: () => EditProfileScreen()),
     GetPage(name: AppRoutes.FEEDBACK, page: () => FeedbackScreen()),
-      GetPage(name: AppRoutes.NOTIFICATIONS, page: () =>  NotificationScreen()),
+    GetPage(name: AppRoutes.NOTIFICATIONS, page: () => NotificationScreen()),
+    GetPage(
+        name: AppRoutes.TERMANDCONDITIONS, page: () => TermsAndConditions()),
   ];
 }

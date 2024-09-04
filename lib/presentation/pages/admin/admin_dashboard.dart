@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rkfitness/core/config/app_colors.dart';
 import 'package:rkfitness/core/config/app_routes.dart';
+import 'package:rkfitness/core/config/app_styles.dart';
 import 'package:rkfitness/presentation/controllers/auth_controller.dart';
 import 'package:rkfitness/presentation/controllers/qr_scanner_controller.dart';
 import 'package:rkfitness/presentation/controllers/user_controller.dart';
 import 'package:rkfitness/presentation/pages/admin/screens/MembersScreen.dart';
 import 'package:rkfitness/presentation/pages/admin/screens/StaffScreen.dart';
-import 'package:rkfitness/presentation/pages/admin/screens/admin_home_screen.dart';
 import 'package:rkfitness/presentation/pages/admin/screens/admin_profile_screen.dart';
 
 class AdminDashboard extends StatefulWidget {
@@ -57,7 +57,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 ),
               ),
               const SizedBox(width: 8.0),
-             
             ],
           ),
           actions: [
@@ -79,7 +78,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
               child: IndexedStack(
                 index: _currentIndex,
                 children: [
-                  AdminHomeScreen(),
                   MembersScreen(),
                   StaffScreen(),
                   AdminProfileScreen(),
@@ -100,10 +98,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
           unselectedItemColor: Colors.grey,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.fitness_center),
               label: 'Members',
             ),
@@ -116,6 +110,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
               label: 'Profile',
             ),
           ],
+          unselectedLabelStyle: AppStyle.unSelectedTabStyle,
+          selectedLabelStyle: AppStyle.selectedTabStyle,
         ),
       ),
     );

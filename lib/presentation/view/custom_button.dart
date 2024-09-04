@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rkfitness/core/config/app_colors.dart';
+import 'package:rkfitness/core/config/app_styles.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -17,7 +18,7 @@ class CustomButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         text,
-        style: TextStyle(color: Colors.white), // Text color
+        style: AppStyle.whiteText14, // Text color
       ),
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primaryColor,

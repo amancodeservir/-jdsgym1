@@ -16,7 +16,7 @@ class SignupOptionScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.asset('assets/logo.png', height: 150),
+            Image.asset('assets/blacklogo.png', height: 150),
             const SizedBox(
               height: 16,
             ),

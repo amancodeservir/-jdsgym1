@@ -22,6 +22,7 @@ class UserProfileScreen extends StatelessWidget {
         title: const Text(
           'User Profile',
           style: AppStyle.whiteText18,
+          
         ),
         leading: const BackButton(
           color: Colors.white,
@@ -33,7 +34,7 @@ class UserProfileScreen extends StatelessWidget {
         child: Builder(
           builder: (context) => Obx(() {
             if (userController.userData.value == null) {
-              return const Center(child: Text('User data not available'));
+              return const Center(child: Text('User data not available',style: TextStyle(  fontFamily: 'Nexa',fontSize: 14),));
             } else {
               return SingleChildScrollView(
                 child: Padding(
@@ -108,7 +109,7 @@ class UserProfileScreen extends StatelessWidget {
                                   children: [
                                     ElevatedButton.icon(
                                       icon: const Icon(Icons.check),
-                                      label: const Text('Accept'),
+                                      label: const Text('Accept',style: TextStyle(fontFamily: 'Nexa',fontSize: 14,fontWeight: FontWeight.bold),),
                                       style: ElevatedButton.styleFrom(
                                         foregroundColor: Colors.white,
                                         backgroundColor: Colors.green,
@@ -120,7 +121,7 @@ class UserProfileScreen extends StatelessWidget {
                                     const SizedBox(width: 16.0),
                                     ElevatedButton.icon(
                                       icon: const Icon(Icons.close),
-                                      label: const Text('Decline'),
+                                      label: const Text('Decline',style: TextStyle(fontFamily: 'Nexa',fontSize: 14,fontWeight: FontWeight.bold),),
                                       style: ElevatedButton.styleFrom(
                                         foregroundColor: Colors.white,
                                         backgroundColor: Colors.red,
@@ -170,6 +171,7 @@ class UserProfileScreen extends StatelessWidget {
               fontSize: 32,
               fontWeight: FontWeight.bold,
               color: Colors.white,
+                fontFamily: 'Nexa',
             ),
           ),
         ),
@@ -188,7 +190,7 @@ class UserProfileScreen extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,  fontFamily: 'Nexa',),
             ),
           ],
         ),
@@ -200,6 +202,7 @@ class UserProfileScreen extends StatelessWidget {
             color: value.seconds < Timestamp.now().seconds
                 ? AppColors.redColor
                 : Colors.grey[700],
+                  fontFamily: 'Nexa',
           ),
         ),
         Divider(height: 30, color: Colors.grey[400]),
@@ -217,7 +220,7 @@ class UserProfileScreen extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,  fontFamily: 'Nexa',),
             ),
           ],
         ),
@@ -228,7 +231,8 @@ class UserProfileScreen extends StatelessWidget {
               fontSize: 16,
               color: value == 'Pending'
                   ? AppColors.redColor
-                  : AppColors.primaryColor),
+                  : AppColors.primaryColor,
+                    fontFamily: 'Nexa',),
         ),
         Divider(height: 30, color: Colors.grey[400]),
       ],
@@ -245,13 +249,13 @@ class UserProfileScreen extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,  fontFamily: 'Nexa',),
             ),
           ],
         ),
         Text(
           value,
-          style: const TextStyle(fontSize: 16, color: Colors.grey),
+          style: const TextStyle(fontSize: 16, color: Colors.grey,  fontFamily: 'Nexa',),
         ),
         Divider(height: 30, color: Colors.grey[400]),
       ],

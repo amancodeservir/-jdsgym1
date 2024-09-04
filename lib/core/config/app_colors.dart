@@ -21,11 +21,8 @@ class AppColors {
   static const Color darkGrey = Color.fromARGB(141, 133, 196, 210);
   static const Color black = Color.fromARGB(255, 0, 0, 0);
   static const Color bg_color = Color.fromARGB(98, 220, 218, 218);
-  static const Color greenColor =Colors.green;
+  static const Color greenColor = Colors.green;
 
   static const Color inputFillColor = Color.fromARGB(74, 215, 242, 240);
-  static const Color blue =  Colors.blue;
- 
-
-
+  static const Color blue = Colors.blue;
 }

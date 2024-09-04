@@ -47,7 +47,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       appBar: AppBar(
         title: const Text(
           'Edit Profile',
-          style: TextStyle(color: Colors.white), // Adjust the color as needed
+          style: TextStyle(color: Colors.white,  fontFamily: 'Nexa',), // Adjust the color as needed
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -63,7 +63,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         child: Builder(
           builder: (context) => Obx(() {
             if (userController.userData.value == null) {
-              return const Center(child: Text('User data not available'));
+              return const Center(child: Text('User data not available' ,style: TextStyle(  fontFamily: 'Nexa'),));
             } else {
               return SingleChildScrollView(
                 child: Padding(
@@ -120,6 +120,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                       Brightness.dark
                                                   ? AppColors.primaryColor
                                                   : Colors.black,
+                                                    fontFamily: 'Nexa',
                                             ),
                                           ),
                                         ],
@@ -234,6 +235,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             fontSize: 32,
             fontWeight: FontWeight.bold,
             color: Colors.white,
+              fontFamily: 'Nexa',
           ),
         ),
       );
@@ -287,6 +289,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 Theme.of(context).brightness == Brightness.dark
                                     ? AppColors.primaryColor
                                     : Colors.black,
+                                      fontFamily: 'Nexa',
                           ),
                         ),
                       ],

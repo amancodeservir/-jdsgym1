@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:rkfitness/core/config/app_routes.dart';
 import 'package:rkfitness/data/model/OnboardingItem.dart';
@@ -12,6 +13,15 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
   final PageController _pageController = PageController();
+
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.black, // Replace with your desired color
+      statusBarIconBrightness: Brightness.light, // Set icons to light or dark
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +62,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       curve: Curves.ease,
                     );
                   } else {
-                    Get.offNamed(AppRoutes.LOGIN);  // Navigate to login screen
+                    Get.offNamed(AppRoutes.LOGIN); // Navigate to login screen
                   }
                 },
               ),

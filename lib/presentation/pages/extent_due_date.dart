@@ -35,7 +35,7 @@ class _ExtendDueDateScreenState extends State<ExtendDueDateScreen> {
         child: Builder(
           builder: (context) => Obx(() {
             if (userController.userData.value == null) {
-              return const Center(child: Text('User data not available'));
+              return const Center(child: Text('User data not available',style: TextStyle(fontFamily: 'Nexa',fontSize: 14),));
             } else {
               return SingleChildScrollView(
                 child: Padding(
@@ -48,6 +48,7 @@ class _ExtendDueDateScreenState extends State<ExtendDueDateScreen> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Nexa'
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -122,8 +123,10 @@ class _ExtendDueDateScreenState extends State<ExtendDueDateScreen> {
                               SnackBar(
                                 content: Text(
                                   'Due date extended successfully!',
+                                  style: TextStyle(fontFamily: 'Nexa'),
                                 ),
                                 backgroundColor: AppColors.primaryColor,
+                                
                               ),
                             );
                           },
@@ -132,6 +135,7 @@ class _ExtendDueDateScreenState extends State<ExtendDueDateScreen> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'Nexa'
                             ),
                           ),
                         ),

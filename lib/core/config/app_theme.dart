@@ -12,9 +12,18 @@ class AppTheme {
       buttonColor: AppColors.buttonColor,
     ),
     textTheme: const TextTheme(
-      bodySmall: TextStyle(color: AppColors.textColor),
-      bodyMedium: TextStyle(color: AppColors.textColor),
-      bodyLarge: TextStyle(color: AppColors.textColor),
+      bodySmall: TextStyle(
+        color: AppColors.textColor,
+        fontFamily: 'Nexa',
+      ),
+      bodyMedium: TextStyle(
+        color: AppColors.textColor,
+        fontFamily: 'Nexa',
+      ),
+      bodyLarge: TextStyle(
+        color: AppColors.textColor,
+        fontFamily: 'Nexa',
+      ),
     ),
     inputDecorationTheme: const InputDecorationTheme(
       fillColor: AppColors.inputFillColor,
@@ -22,7 +31,8 @@ class AppTheme {
       border: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.lightGrey),
       ),
-    ), colorScheme: const ColorScheme.light(
+    ),
+    colorScheme: const ColorScheme.light(
       primary: AppColors.primaryColor,
       onPrimary: AppColors.white,
       secondary: AppColors.accentColor,
@@ -33,7 +43,9 @@ class AppTheme {
       onSurface: AppColors.textColor,
       error: AppColors.redColor,
       onError: AppColors.white,
-    ).copyWith(secondary: AppColors.accentColor).copyWith(background: AppColors.backgroundColor),
+    )
+        .copyWith(secondary: AppColors.accentColor)
+        .copyWith(background: AppColors.backgroundColor),
   );
 
   static final ThemeData darkTheme = ThemeData(
@@ -46,9 +58,18 @@ class AppTheme {
       buttonColor: AppColors.buttonColor,
     ),
     textTheme: const TextTheme(
-      bodySmall: TextStyle(color: AppColors.white),
-      bodyMedium: TextStyle(color: AppColors.white),
-      bodyLarge: TextStyle(color: AppColors.white),
+      bodySmall: TextStyle(
+        color: AppColors.white,
+        fontFamily: 'Nexa',
+      ),
+      bodyMedium: TextStyle(
+        color: AppColors.white,
+        fontFamily: 'Nexa',
+      ),
+      bodyLarge: TextStyle(
+        color: AppColors.white,
+        fontFamily: 'Nexa',
+      ),
     ),
     inputDecorationTheme: const InputDecorationTheme(
       fillColor: AppColors.inputFillColor,
@@ -56,7 +77,8 @@ class AppTheme {
       border: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.darkGrey),
       ),
-    ), colorScheme: const ColorScheme.dark(
+    ),
+    colorScheme: const ColorScheme.dark(
       primary: AppColors.primaryColor,
       onPrimary: AppColors.white,
       secondary: AppColors.accentColor,
@@ -67,6 +89,8 @@ class AppTheme {
       onSurface: AppColors.white,
       error: AppColors.redColor,
       onError: AppColors.white,
-    ).copyWith(secondary: AppColors.accentColor).copyWith(background: AppColors.black),
+    )
+        .copyWith(secondary: AppColors.accentColor)
+        .copyWith(background: AppColors.black),
   );
 }

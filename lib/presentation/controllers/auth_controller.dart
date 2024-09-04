@@ -7,9 +7,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rkfitness/core/config/app_routes.dart';
 import 'package:rkfitness/data/user_data.dart';
 import 'package:rkfitness/presentation/controllers/snackbar_controller.dart';
+import 'package:rkfitness/presentation/controllers/user_controller.dart';
 
 class AuthController extends GetxController {
   ToastController toastController = ToastController();
+  UserController userController = UserController();
   static AuthController instance = Get.find();
   late Rx<User?> firebaseUser;
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -34,41 +36,48 @@ class AuthController extends GetxController {
 
   _setInitialScreen(User? user) async {
     if (user != null) {
+      isLoading(true);
       try {
-        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        FirebaseFirestore.instance
             .collection('users')
             .doc(user.uid)
-            .get();
-        if (userDoc.exists) {
-          userData.value =
-              UserData.fromJson(userDoc.data() as Map<String, dynamic>);
-          navigateToScreen(userData);
-        } else {
-          print('User data not found');
-        }
+            .snapshots()
+            .listen((userDoc) {
+          if (userDoc.exists) {
+            userData.value =
+                UserData.fromJson(userDoc.data() as Map<String, dynamic>);
+            navigateToScreen(userData);
+            print('User data1: ${userData.value?.name}');
+          } else {
+            print('User data not found');
+          }
+        }, onError: (error) {
+          print('Error fetching user data: $error');
+          Get.snackbar('Error', 'Failed to fetch user data');
+        });
       } catch (e) {
-        print('Error fetching user data: $e');
-        Get.snackbar('Error', 'Failed to fetch user data');
+        print('Error setting initial screen: $e');
+        Get.snackbar('Error', 'Failed to set initial screen');
       } finally {
         isLoading(false);
       }
     } else if (user == null &&
         (loggedIn.value == false || loggedOut.value == true)) {
       Future.delayed(const Duration(seconds: 2), () {
-        Get.offNamed(AppRoutes.LOGIN);
+        Get.offNamed(AppRoutes.ONBOARDING);
       });
     } else {
       Future.delayed(const Duration(seconds: 2), () {
-        // Get.offNamed(AppRoutes.HOME);
+        Get.offNamed(AppRoutes.ONBOARDING);
       });
     }
   }
 
   _setInitialScreenGoogle(GoogleSignInAccount? googleSignInAccount) {
     if (googleSignInAccount == null) {
-      Get.offAllNamed(AppRoutes.LOGIN);
+      Get.offAllNamed(AppRoutes.ONBOARDING);
     } else {
-      // Get.offAllNamed(AppRoutes.HOME);
+      //Get.offAllNamed(AppRoutes.HOME);
     }
   }
 
@@ -120,6 +129,7 @@ class AuthController extends GetxController {
           'status': 'Pending',
           'dueDate': Timestamp.now(),
         }).then((_) {
+          _setInitialScreen(auth.currentUser);
           toastController.showSuccessSnackbar(
               'Congratulations!', 'Account created  successfully');
           Get.offNamed(AppRoutes.LOGIN);
@@ -155,38 +165,37 @@ class AuthController extends GetxController {
     isLoading(true);
     await auth.signOut().then((value) {
       isLoading(false);
-      Get.offNamed(AppRoutes.LOGIN);
+      Get.offNamed(AppRoutes.ONBOARDING);
     }).catchError((onError) => {isLoading(false)});
   }
 
- void navigateToScreen(Rxn<UserData> userData) {
-  print("Dineshh Role: ${userData.value?.role}");
-  
-  if (userData.value != null) {
-    if (userData.value!.role == 'admin') {
-      Future.delayed(const Duration(seconds: 2), () {
-        print("Navigating to Admin Dashboard");
-        Get.offNamed(AppRoutes.ADMINDASHBOARD);
-      });
-    } else if (userData.value!.role == 'member') {
-      Future.delayed(const Duration(seconds: 2), () {
-        print("Navigating to Member Dashboard");
-        Get.offNamed(AppRoutes.MEMBERDASHBOARD);
-      });
-    } else if (userData.value!.role == 'staff') {
-      Future.delayed(const Duration(seconds: 2), () {
-        print("Navigating to Staff Dashboard");
-        Get.offNamed(AppRoutes.STAFFDASHBOARD);
-      });
-    } else {
-      Future.delayed(const Duration(seconds: 2), () {
-        print("Navigating to Home");
-        // Get.offNamed(AppRoutes.HOME);
-      });
-    }
-  } else {
-    print("User data is null");
-  }
-}
+  void navigateToScreen(Rxn<UserData> userData) {
+    print("Dineshh Role: ${userData.value?.role}");
 
+    if (userData.value != null) {
+      if (userData.value!.role == 'admin') {
+        Future.delayed(const Duration(seconds: 2), () {
+          print("Navigating to Admin Dashboard");
+          Get.offNamed(AppRoutes.ADMINDASHBOARD);
+        });
+      } else if (userData.value!.role == 'member') {
+        Future.delayed(const Duration(seconds: 2), () {
+          print("Navigating to Member Dashboard");
+          Get.offNamed(AppRoutes.MEMBERDASHBOARD);
+        });
+      } else if (userData.value!.role == 'staff') {
+        Future.delayed(const Duration(seconds: 2), () {
+          print("Navigating to Staff Dashboard");
+          Get.offNamed(AppRoutes.STAFFDASHBOARD);
+        });
+      } else {
+        Future.delayed(const Duration(seconds: 2), () {
+          print("Navigating to Home");
+          // Get.offNamed(AppRoutes.HOME);
+        });
+      }
+    } else {
+      print("User data is null");
+    }
+  }
 }

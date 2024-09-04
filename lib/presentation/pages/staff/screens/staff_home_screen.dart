@@ -79,10 +79,13 @@ class StaffHomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Welcome, ${userController.userData.value!.name}',
-            style: theme.textTheme.titleLarge,
-          ),
+          Obx(() {
+            final userName = userController.userData.value?.name ?? 'User';
+            return Text(
+              'Welcome, $userName',
+              style: theme.textTheme.titleLarge,
+            );
+          }),
           const SizedBox(height: 8),
           Text(
             'What do you want to workout today?',

@@ -17,6 +17,12 @@ class UserController extends GetxController {
   var attendanceDatas = Rxn<Map<DateTime, bool>>();
   var selectedUser = Rxn<UserData>();
   var isLoading = true.obs;
+  var searchQuery = ''.obs;
+
+  // Method to update the search query
+  void updateSearchQuery(String query) {
+    searchQuery.value = query;
+  }
 
   @override
   void onInit() {
@@ -27,23 +33,21 @@ class UserController extends GetxController {
     fetchStaffAndMembers();
   }
 
-  Future<void> fetchStaffAndMembers() async {
-    isLoading(true);
-    try {
-      QuerySnapshot userDocs = await FirebaseFirestore.instance
-          .collection('users')
-          .where('role', whereIn: ['staff', 'member']).get();
-
-      staffAndMembers.value = userDocs.docs
-          .map((doc) => UserData.fromJson(doc.data() as Map<String, dynamic>))
-          .toList();
-      print('Fetched staff and members: ${staffAndMembers.value}');
-    } catch (e) {
-      print('Error fetching staff and members: $e');
-      Get.snackbar('Error', 'Failed to fetch staff and members');
-    } finally {
-      isLoading(false);
-    }
+  void fetchStaffAndMembers() {
+    FirebaseFirestore.instance
+        .collection('users')
+        .where('role', whereIn: ['staff', 'member'])
+        .snapshots()
+        .listen((userDocs) {
+          staffAndMembers.value = userDocs.docs
+              .map((doc) =>
+                  UserData.fromJson(doc.data() as Map<String, dynamic>))
+              .toList();
+          print('Updated staff and members: ${staffAndMembers.value}');
+        }, onError: (error) {
+          print('Error fetching staff and members: $error');
+          Get.snackbar('Error', 'Failed to fetch staff and members');
+        });
   }
 
   Future<void> updateUserStatus(String userId, String status, DateTime dueDate,
@@ -90,32 +94,27 @@ class UserController extends GetxController {
     selectedUser.value = user;
   }
 
-  Future<void> fetchUserData() async {
-    isLoading(true);
+  void fetchUserData() {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      try {
-        DocumentSnapshot userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .get();
-        print('Dinesh $userDoc');
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .snapshots()
+          .listen((userDoc) {
         if (userDoc.exists) {
           userData.value =
               UserData.fromJson(userDoc.data() as Map<String, dynamic>);
-          print('Dinesh ${userData.value}');
+          print('User data2: ${userData.value?.name}');
         } else {
           print('User data not found');
         }
-      } catch (e) {
-        print('Error fetching user data: $e');
+      }, onError: (error) {
+        print('Error fetching user data: $error');
         Get.snackbar('Error', 'Failed to fetch user data');
-      } finally {
-        isLoading(false);
-      }
+      });
     } else {
       print('User not logged in');
-      isLoading(false);
     }
   }
 

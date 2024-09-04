@@ -14,47 +14,112 @@ import 'package:share_plus/share_plus.dart';
 
 class StaffScreen extends StatelessWidget {
   final UserController userController = Get.find<UserController>();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ProgressHUD(
-        backgroundColor: Colors.black.withOpacity(0.5),
-        indicatorWidget: CustomProgressIndicator(),
-        child: Builder(
-          builder: (context) => Obx(() {
-            if (userController.isLoading.value) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (userController.staffAndMembers.value == null ||
-                userController.staffAndMembers.value!.isEmpty) {
-              return const Center(child: Text('No staff or members found'));
-            } else {
-              final staff = userController.staffAndMembers.value!
-                  .where((user) => user.role == 'staff')
-                  .toList();
-              return ListView.builder(
-                padding: const EdgeInsets.all(16.0),
-                itemCount: staff.length,
-                itemBuilder: (context, index) {
-                  final user = staff[index];
-                  return GestureDetector(
-                    onTap: () {
-                      userController.selectUser(user);
-                      Get.to(() => UserProfileScreen());
-                    },
-                    child: StaffMemberCard(
-                      user: user,
-                      onAccept: () => Get.to(
-                          () => ExtendDueDateScreen(userId: user.userId)),
-                      onReject: () => userController.updateUserStatus(
-                          user.userId, 'Rejected', DateTime.now(), context),
-                    ),
-                  );
-                },
-              );
-            }
-          }),
-        ),
+      body: Column(
+        children: [
+          // Search Bar
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                  offset: Offset(0, 1),
+                ),
+              ],
+            ),
+            child: TextField(
+              controller: _searchController,
+              onChanged: (value) {
+                userController.updateSearchQuery(value);
+              },
+              decoration: InputDecoration(
+                hintText: 'Search staff...',
+                prefixIcon: Icon(Icons.search, color: Colors.grey),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                    color: Colors.grey, // Set the border color here
+                    width: 1.0, // Set the border width here
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                    color: Colors.grey, // Set the border color here
+                    width: 1.0, // Set the border width here
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                    color:
+                        Colors.grey, // Set the border color when focused here
+                    width: 1.0, // Set the border width when focused here
+                  ),
+                ),
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              ),
+            ),
+          ), // Staff List
+          Expanded(
+            child: ProgressHUD(
+              backgroundColor: Colors.black.withOpacity(0.5),
+              indicatorWidget: CustomProgressIndicator(),
+              child: Builder(
+                builder: (context) => Obx(() {
+                  if (userController.isLoading.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (userController.staffAndMembers.value == null ||
+                      userController.staffAndMembers.value!.isEmpty) {
+                    return const Center(
+                        child: Text('No staff or members found'));
+                  } else {
+                    final searchQuery =
+                        userController.searchQuery.value.toLowerCase();
+                    final staff = userController.staffAndMembers.value!
+                        .where((user) => user.role == 'staff')
+                        .where((user) =>
+                            user.name.toLowerCase().contains(searchQuery))
+                        .toList();
+                    return ListView.builder(
+                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                      itemCount: staff.length,
+                      itemBuilder: (context, index) {
+                        final user = staff[index];
+                        return GestureDetector(
+                          onTap: () {
+                            userController.selectUser(user);
+                            Get.to(() => UserProfileScreen());
+                          },
+                          child: StaffMemberCard(
+                            user: user,
+                            onAccept: () => Get.to(
+                                () => ExtendDueDateScreen(userId: user.userId)),
+                            onReject: () => userController.updateUserStatus(
+                                user.userId,
+                                'Rejected',
+                                DateTime.now(),
+                                context),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                }),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -104,8 +169,14 @@ class StaffMemberCard extends StatelessWidget {
                         children: [
                           _buildInfoSection(Icons.person, 'Name', user.name,
                               AppStyle.heading2Black),
+                          SizedBox(
+                            height: 4,
+                          ),
                           _buildInfoSection(Icons.email, 'Email', user.email,
                               AppStyle.subTitle),
+                          SizedBox(
+                            height: 4,
+                          ),
                           _buildInfoSection(
                               Icons.calendar_today,
                               'Due Date',
@@ -116,7 +187,11 @@ class StaffMemberCard extends StatelessWidget {
                                         Timestamp.now().seconds
                                     ? AppColors.redColor
                                     : Colors.grey[700],
+                                fontFamily: 'Nexa',
                               )),
+                          SizedBox(
+                            height: 4,
+                          ),
                           _buildInfoSection(
                               Icons.info,
                               'Status',
@@ -124,8 +199,9 @@ class StaffMemberCard extends StatelessWidget {
                               TextStyle(
                                 color: user.status == 'Accepted'
                                     ? AppColors.greenColor
-                                    : Colors.red,
+                                    : AppColors.primaryColor,
                                 fontWeight: FontWeight.bold,
+                                fontFamily: 'Nexa',
                               )),
                         ],
                       ),
@@ -139,68 +215,90 @@ class StaffMemberCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (user.dueDate.compareTo(Timestamp.now()) < 0 &&
-                              user.status == 'Accepted')
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                ElevatedButton.icon(
-                                  icon: const Icon(
-                                    Icons.date_range,
-                                    size: 11,
-                                  ), // Add an appropriate icon here
-                                  label: const Text(
-                                    'Extend Due',
-                                    style: AppStyle.whiteText10,
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.white,
-                                    backgroundColor: Colors.green,
-                                  ),
-                                  onPressed: () => Get.to(() =>
-                                      ExtendDueDateScreen(userId: user.userId)),
-                                ),
-                                const SizedBox(width: 16),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.white,
-                                    backgroundColor: Colors.red,
-                                  ),
-                                  onPressed: () => sendReminder(
-                                    user.name,
-                                    _formatTimestamp(user.dueDate),
-                                    user.mobileNumber,
-                                    user.email,
-                                  ),
-                                  child: const Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        'Reminder',
-                                        style: AppStyle.whiteText10,
+                          if (user.status == 'Accepted')
+                            Padding(
+                              padding: EdgeInsets.only(top: 16),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  ElevatedButton.icon(
+                                      icon: const Icon(
+                                        Icons.date_range,
+                                        size: 10,
                                       ),
-                                      SizedBox(
-                                          width:
-                                              8.0), // Adjust the space between text and icon
-                                      Icon(
-                                        Icons.send,
-                                        size: 11,
+                                      label: const Text(
+                                        'Extend Due',
+                                        style: AppStyle.whiteText11,
                                       ),
-                                    ],
+                                      style: ElevatedButton.styleFrom(
+                                        foregroundColor: Colors.white,
+                                        backgroundColor: AppColors.greenColor,
+                                        padding: EdgeInsets.only(
+                                            left: 16,
+                                            right: 16,
+                                            top: 8,
+                                            bottom: 8), // Remove padding
+                                        minimumSize: Size(0,
+                                            0), // Remove minimum size constraints
+                                        tapTargetSize: MaterialTapTargetSize
+                                            .shrinkWrap, // Reduce tap target size
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                8)), // Customize shape if needed
+                                      ),
+                                      onPressed: () => Get.to(() =>
+                                          ExtendDueDateScreen(
+                                              userId: user.userId))),
+                                  const SizedBox(width: 16),
+                                  ElevatedButton.icon(
+                                    icon: const Icon(
+                                      Icons.send,
+                                      size: 10,
+                                    ),
+                                    label: const Text(
+                                      'Reminder',
+                                      style: AppStyle.whiteText11,
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.white,
+                                      backgroundColor: AppColors.primaryColor,
+                                      padding: EdgeInsets.only(
+                                          left: 16,
+                                          right: 16,
+                                          top: 8,
+                                          bottom: 8), // Remove padding
+                                      minimumSize: Size(0,
+                                          0), // Remove minimum size constraints
+                                      tapTargetSize: MaterialTapTargetSize
+                                          .shrinkWrap, // Reduce tap target size
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              8)), // Customize shape if needed
+                                    ),
+                                    onPressed: () => sendReminder(
+                                      user.name,
+                                      _formatTimestamp(user.dueDate),
+                                      user.mobileNumber,
+                                      user.email,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           const SizedBox(height: 24.0),
                           if (user.status == 'Pending')
                             Obx(() {
                               final isLoading = userController.isLoading.value;
                               return isLoading
-                                  ? Center(child: CircularProgressIndicator())
+                                  ? const Center(
+                                      child: CircularProgressIndicator())
                                   : Row(
                                       children: [
                                         ElevatedButton.icon(
-                                          icon: const Icon(Icons.check),
+                                          icon: const Icon(
+                                            Icons.check,
+                                            size: 12,
+                                          ),
                                           label: const Text(
                                             'Accept',
                                             style: AppStyle.whiteText11,
@@ -208,19 +306,47 @@ class StaffMemberCard extends StatelessWidget {
                                           style: ElevatedButton.styleFrom(
                                             foregroundColor: Colors.white,
                                             backgroundColor: Colors.green,
+                                            padding: EdgeInsets.only(
+                                                left: 16,
+                                                right: 16,
+                                                top: 8,
+                                                bottom: 8), // Remove padding
+                                            minimumSize: Size(0,
+                                                0), // Remove minimum size constraints
+                                            tapTargetSize: MaterialTapTargetSize
+                                                .shrinkWrap, // Reduce tap target size
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(
+                                                    8)), // Customize shape if needed
                                           ),
                                           onPressed: onAccept,
                                         ),
                                         const SizedBox(width: 8.0),
                                         ElevatedButton.icon(
-                                          icon: const Icon(Icons.close),
+                                          icon: const Icon(
+                                            Icons.close,
+                                            size: 10,
+                                          ),
                                           label: const Text(
                                             'Decline',
                                             style: AppStyle.whiteText11,
                                           ),
                                           style: ElevatedButton.styleFrom(
                                             foregroundColor: Colors.white,
-                                            backgroundColor: Colors.red,
+                                            backgroundColor:
+                                                AppColors.primaryColor,
+                                            padding: EdgeInsets.only(
+                                                left: 16,
+                                                right: 16,
+                                                top: 8,
+                                                bottom: 8), // Remove padding
+                                            minimumSize: Size(0,
+                                                0), // Remove minimum size constraints
+                                            tapTargetSize: MaterialTapTargetSize
+                                                .shrinkWrap, // Reduce tap target size
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(
+                                                    8)), // Customize shape if needed
                                           ),
                                           onPressed: onReject,
                                         ),
@@ -244,19 +370,6 @@ class StaffMemberCard extends StatelessWidget {
             left: 8,
             top: 20,
           ),
-          Positioned(
-            right: 0,
-            top: 8,
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.0),
-                color: AppColors.primaryColor,
-              ),
-              child: Text(user.role, style: AppStyle.whiteText11),
-            ),
-          )
         ],
       ),
     );
@@ -269,7 +382,7 @@ class StaffMemberCard extends StatelessWidget {
         if (title != 'Name')
           Icon(
             icon,
-            color: AppColors.primaryColor,
+            color: AppColors.lightGrey,
             size: 18,
           ),
         if (title != 'Name') const SizedBox(width: 8),
@@ -278,7 +391,7 @@ class StaffMemberCard extends StatelessWidget {
           children: [
             const SizedBox(height: 4.0),
             Text(
-              value,
+              value.length > 26 ? '${value.substring(0, 26)}...' : value,
               style: textStyle,
             ),
           ],

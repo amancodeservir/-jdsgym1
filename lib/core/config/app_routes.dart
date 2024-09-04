@@ -13,5 +13,6 @@ class AppRoutes {
   static const String QRSCANNER = '/qrscanner';
   static const String EDITPROFILE = '/editprofile';
   static const String FEEDBACK = '/feedback';
-    static const String NOTIFICATIONS = '/notifications';
+  static const String NOTIFICATIONS = '/notifications';
+  static const String TERMANDCONDITIONS = '/termandconditions';
 }

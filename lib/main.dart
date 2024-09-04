@@ -2,7 +2,6 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rkfitness/core/config/app_colors.dart';
 import 'package:rkfitness/core/config/app_constant.dart';
 import 'package:rkfitness/core/config/app_routes.dart';
 import 'package:rkfitness/core/config/app_routing.dart';
@@ -13,7 +12,6 @@ import 'package:rkfitness/presentation/controllers/user_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   if (GetPlatform.isAndroid) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(

@@ -1,2 +1,0 @@
-androidx.test.core
-id view_tree_lifecycle_owner

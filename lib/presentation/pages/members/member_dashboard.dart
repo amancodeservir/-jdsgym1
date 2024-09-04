@@ -25,6 +25,7 @@ class _MemberDashboardState extends State<MemberDashboard> {
   @override
   void initState() {
     userController.fetchUserData();
+    // print('user Data4: ${userController.userData.value?.name}');
     super.initState();
   }
 
@@ -73,7 +74,7 @@ class _MemberDashboardState extends State<MemberDashboard> {
             ),
             IconButton(
               onPressed: () {
-              Get.toNamed(AppRoutes.NOTIFICATIONS);
+                Get.toNamed(AppRoutes.NOTIFICATIONS);
               },
               icon: const Icon(
                 Icons.notifications_outlined,

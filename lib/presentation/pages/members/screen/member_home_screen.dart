@@ -5,7 +5,8 @@ import 'package:rkfitness/presentation/controllers/user_controller.dart';
 
 class MemberHomeScreen extends StatelessWidget {
   final UserController userController = Get.find<UserController>();
-  List<Map<String, dynamic>> dummyWorkouts = [
+
+  final List<Map<String, dynamic>> dummyWorkouts = [
     {
       'title': 'Yoga',
       'description': 'Start your day with a peaceful yoga session.',
@@ -79,10 +80,13 @@ class MemberHomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Welcome, ${userController.userData.value!.name}',
-            style: theme.textTheme.titleLarge,
-          ),
+          Obx(() {
+            final userName = userController.userData.value?.name ?? 'User';
+            return Text(
+              'Welcome, $userName',
+              style: theme.textTheme.titleLarge,
+            );
+          }),
           const SizedBox(height: 8),
           Text(
             'What do you want to workout today?',
@@ -190,7 +194,7 @@ class MemberHomeScreen extends StatelessWidget {
                 width: 120,
                 height: 120,
                 child: Image.asset(
-                  dummyWorkouts[index]['imagePath'],
+                  dummyWorkouts[index]['imagePath'] ?? '',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -202,151 +206,141 @@ class MemberHomeScreen extends StatelessWidget {
   }
 
   String _getWorkoutTitle(int index) {
-    // Replace with your logic to get workout title based on index
-    return dummyWorkouts[index]['title'];
+    List<String> titles = [
+      'Start practicing \n Your workout!',
+      'Cardio Blast',
+      'Leg Day',
+    ];
+    return titles[index % titles.length];
   }
 
   String _getWorkoutDescription(int index) {
-    // Replace with your logic to get workout description based on index
-    return dummyWorkouts[index]['description'];
+    List<String> descriptions = [
+      '45 minutes',
+      '30 minutes',
+      '60 minutes',
+    ];
+    return descriptions[index % descriptions.length];
   }
-}
 
-Widget _buildCategoriesSection(
-    ThemeData theme, Color cardColor, Color shadowColor) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 16),
-    child: Column(
-      children: [
-        Row(
-          children: [
-            Text(
-              'Categories',
-              style: theme.textTheme.labelLarge,
-            ),
-            const Spacer(),
-            Text(
-              'See all',
-              style: theme.textTheme.bodyMedium,
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        _buildCategories(theme, cardColor, shadowColor),
-      ],
-    ),
-  );
-}
+  Widget _buildCategoriesSection(
+      ThemeData theme, Color cardColor, Color shadowColor) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                'Categories',
+                style: theme.textTheme.labelLarge,
+              ),
+              const Spacer(),
+              Text(
+                'See all',
+                style: theme.textTheme.bodyMedium,
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          _buildCategories(theme, cardColor, shadowColor),
+        ],
+      ),
+    );
+  }
 
-Widget _buildCategories(ThemeData theme, Color cardColor, Color shadowColor) {
-  return SizedBox(
-    height: 84,
-    child: ListView(
-      scrollDirection: Axis.horizontal,
+  Widget _buildCategories(ThemeData theme, Color cardColor, Color shadowColor) {
+    return SizedBox(
+      height: 84,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: const [
+          CategoryItem(
+            title: 'Weightlifting',
+            icon: Icons.fitness_center,
+          ),
+          SizedBox(width: 8),
+          CategoryItem(
+            title: 'Yoga',
+            icon: Icons.spa,
+          ),
+          SizedBox(width: 8),
+          CategoryItem(
+            title: 'Cardio',
+            icon: Icons.directions_run,
+          ),
+          SizedBox(width: 8),
+          CategoryItem(
+            title: 'Stretching',
+            icon: Icons.accessibility_new,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDailyExercisesSection(
+      ThemeData theme, Color cardColor, Color shadowColor) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                'Daily Exercises',
+                style: theme.textTheme.labelLarge,
+              ),
+              const Spacer(),
+              Text(
+                'See all',
+                style: theme.textTheme.bodyMedium,
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          _buildDailyExercises(theme, cardColor, shadowColor),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDailyExercises(
+      ThemeData theme, Color cardColor, Color shadowColor) {
+    return ListView(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
       children: const [
-        CategoryItem(
-          title: 'Weightlifting',
+        ExerciseItem(
+          title: 'Push Ups',
+          subTitle: '20 Times',
+          description: '6 Minutes',
           icon: Icons.fitness_center,
         ),
-        SizedBox(width: 8),
-        CategoryItem(
-          title: 'Yoga',
-          icon: Icons.spa,
-        ),
-        SizedBox(width: 8),
-        CategoryItem(
-          title: 'Cardio',
+        SizedBox(height: 8),
+        ExerciseItem(
+          title: 'Running',
+          subTitle: '4 Km',
+          description: '10 Minutes',
           icon: Icons.directions_run,
         ),
-        SizedBox(width: 8),
-        CategoryItem(
+        SizedBox(height: 8),
+        ExerciseItem(
+          title: 'Natrajasana Yoga Pose',
+          subTitle: '2-6 Times',
+          description: '15 Minutes',
+          icon: Icons.spa,
+        ),
+        SizedBox(height: 8),
+        ExerciseItem(
           title: 'Stretching',
+          subTitle: '20 Times',
+          description: '6 Minutes',
           icon: Icons.accessibility_new,
         ),
       ],
-    ),
-  );
-}
-
-Widget _buildDailyExercisesSection(
-    ThemeData theme, Color cardColor, Color shadowColor) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 16),
-    child: Column(
-      children: [
-        Row(
-          children: [
-            Text(
-              'Daily Exercises',
-              style: theme.textTheme.labelLarge,
-            ),
-            const Spacer(),
-            Text(
-              'See all',
-              style: theme.textTheme.bodyMedium,
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        _buildDailyExercises(theme, cardColor, shadowColor),
-      ],
-    ),
-  );
-}
-
-Widget _buildDailyExercises(
-    ThemeData theme, Color cardColor, Color shadowColor) {
-  return ListView(
-    physics: const NeverScrollableScrollPhysics(),
-    shrinkWrap: true,
-    children: const [
-      ExerciseItem(
-        title: 'Push Ups',
-        subTitle: '20 Times',
-        description: '6 Minutes',
-        icon: Icons.fitness_center,
-      ),
-      SizedBox(height: 8),
-      ExerciseItem(
-        title: 'Running',
-        subTitle: '4 Km',
-        description: '10 Minutes',
-        icon: Icons.directions_run,
-      ),
-      SizedBox(height: 8),
-      ExerciseItem(
-        title: 'Natrajasana Yoga Pose',
-        subTitle: '2-6 Times',
-        description: '15 Minutes',
-        icon: Icons.spa,
-      ),
-      SizedBox(height: 8),
-      ExerciseItem(
-        title: 'Stretching',
-        subTitle: '20 Times',
-        description: '6 Minutes',
-        icon: Icons.accessibility_new,
-      ),
-    ],
-  );
-}
-
-String _getWorkoutTitle(int index) {
-  List<String> titles = [
-    'Start practicing \n Your workout!',
-    'Cardio Blast',
-    'Leg Day',
-  ];
-  return titles[index % titles.length];
-}
-
-String _getWorkoutDescription(int index) {
-  List<String> descriptions = [
-    '45 minutes',
-    '30 minutes',
-    '60 minutes',
-  ];
-  return descriptions[index % descriptions.length];
+    );
+  }
 }
 
 class CategoryItem extends StatelessWidget {

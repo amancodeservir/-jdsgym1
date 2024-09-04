@@ -95,7 +95,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         child: Builder(
           builder: (context) => Obx(() {
             if (userController.userData.value == null) {
-              return const Center(child: Text('User data not available'));
+              return const Center(child: Text('User data not available',style: AppStyle.body,));
             } else {
               return Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -124,13 +124,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           _notifications[index]['title']!,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                          style: TextStyle(  fontFamily: 'Nexa',fontSize: 14,fontWeight: FontWeight.w900),
                                         ),
                                       ),
                                       subtitle: Text(
-                                          _notifications[index]['subtitle']!),
+                                          _notifications[index]['subtitle']!,style:TextStyle(  fontFamily: 'Nexa',fontSize: 14,fontWeight: FontWeight.w800),),
                                       onTap: () {
                                         // Handle notification tap
                                       },

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rkfitness/core/config/app_colors.dart';
 import 'package:rkfitness/core/config/app_routes.dart';
+import 'package:rkfitness/core/config/app_styles.dart';
 import 'package:rkfitness/core/utils/custom_progress_indicator.dart';
 import 'package:rkfitness/data/user_data.dart';
 import 'package:rkfitness/presentation/controllers/ThemeController.dart';
@@ -25,7 +26,7 @@ class AdminProfileScreen extends StatelessWidget {
         child: Builder(
           builder: (context) => Obx(() {
             if (userController.userData.value == null) {
-              return const Center(child: Text('User data not available'));
+              return const Center(child: Text('User data not available',style: AppStyle.body,));
             } else {
               UserData? userData = userController.userData.value;
               return SingleChildScrollView(
@@ -49,7 +50,7 @@ class AdminProfileScreen extends StatelessWidget {
 
   Widget _buildProfile(UserData? userData, BuildContext context) {
     if (userData == null) {
-      return const Center(child: Text('User data not available'));
+      return const Center(child: Text('User data not available',style: AppStyle.body,));
     } else {
       return Padding(
         padding: const EdgeInsets.all(16.0),
@@ -185,13 +186,16 @@ class AdminProfileScreen extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,  fontFamily: 'Nexa',),
             ),
           ],
         ),
-        Text(
-          value,
-          style: const TextStyle(fontSize: 16, color: Colors.grey),
+        Container(
+          padding: EdgeInsets.only(left: 32),
+          child: Text(
+            value,
+            style: const TextStyle(fontSize: 16, color: Colors.grey,  fontFamily: 'Nexa',),
+          ),
         ),
         Divider(height: 30, color: Colors.grey[400]),
       ],
@@ -208,7 +212,7 @@ class AdminProfileScreen extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,  fontFamily: 'Nexa',),
             ),
           ],
         ),
@@ -220,6 +224,7 @@ class AdminProfileScreen extends StatelessWidget {
             color: value.seconds < Timestamp.now().seconds
                 ? AppColors.redColor
                 : Colors.grey[700],
+                  fontFamily: 'Nexa',
           ),
         ),
         Divider(height: 30, color: Colors.grey[400]),
@@ -253,7 +258,7 @@ class AdminProfileScreen extends StatelessWidget {
               fontSize: 16,
               color: value == 'Pending'
                   ? AppColors.redColor
-                  : AppColors.primaryColor),
+                  : AppColors.primaryColor,  fontFamily: 'Nexa',),
         ),
         Divider(height: 30, color: Colors.grey[400]),
       ],
@@ -283,6 +288,7 @@ class AdminProfileScreen extends StatelessWidget {
                 fontSize: 14,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
+                  fontFamily: 'Nexa',
               ),
             ),
           ],
@@ -302,7 +308,7 @@ class AdminProfileScreen extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       leading: Icon(icon, color: AppColors.primaryColor),
       title: Text(title,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,  fontFamily: 'Nexa',)),
       trailing: Switch(
         value: value,
         onChanged: onChanged,
@@ -325,7 +331,7 @@ class AdminProfileScreen extends StatelessWidget {
         icon: const Icon(Icons.logout, size: 28, color: Colors.white),
         label: const Text(
           'Logout',
-          style: TextStyle(fontSize: 16, color: Colors.white),
+          style: TextStyle(fontSize: 16, color: Colors.white,  fontFamily: 'Nexa',),
         ),
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryColor,
