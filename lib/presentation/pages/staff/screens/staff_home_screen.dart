@@ -165,15 +165,15 @@ class StaffHomeScreen extends StatelessWidget {
                     onTap: () {
                       // Add your action here
                     },
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
                           'START',
                           style: TextStyle(color: Colors.white),
                         ),
-                        const SizedBox(width: 8),
-                        const Icon(
+                        SizedBox(width: 8),
+                        Icon(
                           Icons.arrow_right_alt,
                           size: 16,
                           color: Colors.white,

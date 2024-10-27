@@ -141,7 +141,7 @@ class _MemberExerciseScreenState extends State<MemberExerciseScreen> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.grey[200],
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.grey,
                   blurRadius: 1,
@@ -189,7 +189,7 @@ class _MemberExerciseScreenState extends State<MemberExerciseScreen> {
               decoration: BoxDecoration(
                 color: primaryColor,
                 borderRadius: BorderRadius.circular(16.0),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.grey,
                     blurRadius: 1,

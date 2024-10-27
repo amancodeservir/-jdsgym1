@@ -41,7 +41,7 @@ dependencies:
   firebase_auth: ^4.19.1
   google_sign_in: ^6.2.1  
   cloud_firestore: ^4.16.1
-  carousel_slider: ^4.2.1
+  carousel_slider: ^5.0.0
   qr_code_scanner: ^1.0.1
   image_picker: ^1.1.0
   firebase_storage: ^11.7.4
