@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:87003555730:android:053dd630ad5e90feb4034b",
+        "mobilesdk_app_id": "1:87003555730:android:ecdbb46023635672b4034b",
         "android_client_info": {
-          "package_name": "com.codeservir.rkfitness"
+          "package_name": "com.difmo.jdsgym"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "87003555730-1gqjm6jg943pughrrs1didl6ju29ml85.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.difmo.jdsgym",
+            "certificate_hash": "df70504e512c9174616dd15484f3b6970f961ee1"
+          }
+        },
         {
           "client_id": "87003555730-6q6njcdjhntfq605jk0rj65qbet5j2e4.apps.googleusercontent.com",
           "client_type": 3

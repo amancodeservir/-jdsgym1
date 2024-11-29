@@ -15,4 +15,5 @@ class AppRoutes {
   static const String FEEDBACK = '/feedback';
   static const String NOTIFICATIONS = '/notifications';
   static const String TERMANDCONDITIONS = '/termandconditions';
+    static const String WORKOUT = '/workout';
 }

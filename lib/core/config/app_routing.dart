@@ -17,6 +17,8 @@ import 'package:rkfitness/presentation/pages/splash_screen.dart';
 import 'package:rkfitness/presentation/pages/auth/staff_signup_screen.dart';
 import 'package:rkfitness/presentation/pages/staff/staff_dashboard.dart';
 import 'package:rkfitness/presentation/pages/term_and_condition.dart';
+import 'package:rkfitness/presentation/pages/workout_screen.dart';
+
 
 class AppRouting {
   static final List<GetPage> getAppRoutes = [
@@ -34,6 +36,7 @@ class AppRouting {
     GetPage(name: AppRoutes.EDITPROFILE, page: () => EditProfileScreen()),
     GetPage(name: AppRoutes.FEEDBACK, page: () => FeedbackScreen()),
     GetPage(name: AppRoutes.NOTIFICATIONS, page: () => NotificationScreen()),
+    GetPage(name: AppRoutes.WORKOUT, page: () => WorkoutsScreen()),
     GetPage(
         name: AppRoutes.TERMANDCONDITIONS, page: () => TermsAndConditions()),
   ];

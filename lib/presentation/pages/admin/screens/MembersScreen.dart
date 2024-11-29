@@ -464,7 +464,7 @@ Your due date is: $dueDate.
 
 Please pay your fee to extend your subscription.
 
-Download our app: https://play.google.com/store/apps/details?id=com.codeservir.rkfitness
+Download our app: https://play.google.com/store/apps/details?id=com.dfimo.jdsgym
 ''';
 
     Share.share(message);

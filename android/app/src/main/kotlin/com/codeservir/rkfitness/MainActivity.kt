@@ -1,4 +1,4 @@
-package com.codeservir.rkfitness
+package com.dfimo.jdsgym
 
 import io.flutter.embedding.android.FlutterActivity
 

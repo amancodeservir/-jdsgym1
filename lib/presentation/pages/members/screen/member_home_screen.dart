@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:rkfitness/presentation/controllers/user_controller.dart';
+import 'package:rkfitness/presentation/pages/workout_screen.dart';
+import 'package:rkfitness/core/config/app_routes.dart';
 
 class MemberHomeScreen extends StatelessWidget {
   final UserController userController = Get.find<UserController>();
@@ -164,7 +166,8 @@ class MemberHomeScreen extends StatelessWidget {
                   ),
                   child: InkWell(
                     onTap: () {
-                      // Add your action here
+                         print("jgyfugfyjukgfukgkhgghg");
+                         Get.toNamed(AppRoutes.WORKOUT);
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
