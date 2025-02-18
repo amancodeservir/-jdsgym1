@@ -48,6 +48,7 @@ class AuthController extends GetxController {
                 UserData.fromJson(userDoc.data() as Map<String, dynamic>);
             navigateToScreen(userData);
             print('User data1: ${userData.value?.name}');
+            // print('User data1: ${userData.value?.status}');
           } else {
             print('User data not found');
           }

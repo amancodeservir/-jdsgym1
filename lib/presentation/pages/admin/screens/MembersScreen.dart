@@ -88,7 +88,7 @@ class MembersScreen extends StatelessWidget {
                     final searchQuery =
                         userController.searchQuery.value.toLowerCase();
                     final staff = userController.staffAndMembers.value!
-                        .where((user) => user.role == 'staff')
+                        .where((user) => user.role == 'member')
                         .where((user) =>
                             user.name.toLowerCase().contains(searchQuery))
                         .toList();

@@ -11,12 +11,17 @@ import 'package:rkfitness/presentation/controllers/user_controller.dart';
 import 'package:rkfitness/presentation/pages/extent_due_date.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../controllers/auth_controller.dart';
+
 class UserProfileScreen extends StatelessWidget {
   final UserController userController = Get.find<UserController>();
+  final AuthController _authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
     final user = userController.selectedUser.value;
+    final loggedInUser = _authController.userData.value; // Access current user using GetX
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -35,7 +40,8 @@ class UserProfileScreen extends StatelessWidget {
           builder: (context) => Obx(() {
             if (userController.userData.value == null) {
               return const Center(child: Text('User data not available',style: TextStyle(  fontFamily: 'Nexa',fontSize: 14),));
-            } else {
+            }
+            else {
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -56,6 +62,7 @@ class UserProfileScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             const SizedBox(width: 16),
+                            if(loggedInUser != null && loggedInUser.role == "admin")
                             ElevatedButton.icon(
                               icon: const Icon(Icons
                                   .date_range), // Add an appropriate icon here
@@ -92,7 +99,7 @@ class UserProfileScreen extends StatelessWidget {
                                   SizedBox(
                                       width:
                                           8.0), // Adjust the space between text and icon
-                                  Icon(Icons.send),
+                                  Icon(Icons.send, color: Colors.white,),
                                 ],
                               ),
                             ),

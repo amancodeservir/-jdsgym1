@@ -240,7 +240,6 @@ class UserController extends GetxController {
             status: userData.value!.status,
             dueDate: userData.value!.dueDate);
         updateUserData(updatedUserData);
-        // Show a success message
         Get.snackbar('Success', 'Profile updated successfully');
         isLoading(false);
       } catch (e) {

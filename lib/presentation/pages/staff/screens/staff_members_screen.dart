@@ -11,8 +11,12 @@ import 'package:rkfitness/data/user_data.dart';
 import 'package:rkfitness/presentation/pages/UserProfileScreen.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../controllers/auth_controller.dart';
+
 class StaffMembersScreen extends StatelessWidget {
   final UserController userController = Get.find<UserController>();
+final AuthController _authController = Get.find<AuthController>(); // Get instance of AuthController
+  // var userData = Rxn<UserData>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +24,13 @@ class StaffMembersScreen extends StatelessWidget {
     final bgColor = isDarkMode ? Colors.black : const Color.fromRGBO(220, 218, 218, 0.384);
     final textColor = isDarkMode ? Colors.white : Colors.black;
 
+
+    final loggedInUser = _authController.userData.value; // Access current user using GetX
+    if (loggedInUser != null) {
+      print("Logged-in User Status: ${loggedInUser.status}");
+    } else {
+      print("No user is currently logged in.");
+    }
     return Scaffold(
       backgroundColor: bgColor,
       body: ProgressHUD(
@@ -29,7 +40,44 @@ class StaffMembersScreen extends StatelessWidget {
           builder: (context) => Obx(() {
             if (userController.isLoading.value) {
               return const Center(child: CircularProgressIndicator());
-            } else if (userController.staffAndMembers.value == null ||
+            }
+            else if (loggedInUser != null && loggedInUser.status == "Pending") {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.pending_actions,
+                        color: Colors.redAccent,
+                        size: 80,
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        "Your account approval is pending.",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        "Please wait for approval.",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+             else if (userController.staffAndMembers.value == null ||
                 userController.staffAndMembers.value!.isEmpty) {
               return Center(
                 child: Text(
@@ -182,6 +230,7 @@ class MemberCard extends StatelessWidget {
                                       Icon(
                                         Icons.send,
                                         size: 11,
+                                        color: Colors.white,
                                       ),
                                     ],
                                   ),
